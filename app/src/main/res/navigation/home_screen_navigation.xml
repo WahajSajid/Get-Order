@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_screen_navigation"
+    android:label="Food Point"
+    app:startDestination="@id/homeScreen">
+
+    <fragment
+        android:id="@+id/homeScreen"
+        android:name="com.application.foodapp.HomeScreen"
+        android:label="Food Point"
+        tools:layout="@layout/fragment_home_screen" >
+        <action
+            android:id="@+id/action_homeScreen_to_getOrderFragment"
+            app:destination="@id/getOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/getOrderFragment"
+        android:name="com.application.foodapp.GetOrderFragment"
+        android:label="Get Order"
+        tools:layout="@layout/fragment_get_order" />
+</navigation>

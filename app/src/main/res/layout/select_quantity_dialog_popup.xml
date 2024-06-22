@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/quantitylayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/selectQuantityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantity: "
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/selectQuantityBox"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="25dp"
+                android:clickable="false"
+                app:boxCornerRadiusBottomEnd="5sp"
+                app:boxCornerRadiusBottomStart="5sp"
+                app:boxCornerRadiusTopEnd="5sp"
+                app:boxCornerRadiusTopStart="5sp"
+                app:boxStrokeColor="@color/black"
+                app:counterTextAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:hintAnimationEnabled="true"
+                app:layout_constraintBottom_toBottomOf="@id/selectQuantityTextView"
+                app:layout_constraintStart_toEndOf="@id/selectQuantityTextView"
+                app:layout_constraintTop_toTopOf="@id/selectQuantityTextView">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/selectQuantityBoxEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:editable="false"
+                    android:text="1"
+                    tools:ignore="Deprecated" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <TextView
+                android:id="@+id/quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                app:layout_constraintStart_toStartOf="@id/selectQuantityBox"
+                app:layout_constraintEnd_toEndOf="@id/selectQuantityBox"
+                app:layout_constraintTop_toTopOf="@id/selectQuantityBox"
+                app:layout_constraintBottom_toBottomOf="@id/selectQuantityBox"/>
+
+            <ImageView
+                android:id="@+id/plusImageButton"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="5sp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/icon_plus"
+                app:layout_constraintBottom_toBottomOf="@id/selectQuantityBox"
+                app:layout_constraintStart_toEndOf="@id/selectQuantityBox"
+                app:layout_constraintTop_toTopOf="@id/selectQuantityBox" />
+
+
+            <ImageView
+                android:id="@+id/minusImageButton"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="5sp"
+                android:src="@drawable/icon_minus"
+                app:layout_constraintBottom_toBottomOf="@id/selectQuantityBox"
+                app:layout_constraintEnd_toStartOf="@id/selectQuantityBox"
+                app:layout_constraintTop_toTopOf="@id/selectQuantityBox" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:text="Add"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:backgroundTint="@color/app_theme_color"
+            app:layout_constraintTop_toBottomOf="@id/quantitylayout"
+            app:cornerRadius="4sp"
+            android:layout_marginTop="35sp"
+            android:layout_marginEnd="10sp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

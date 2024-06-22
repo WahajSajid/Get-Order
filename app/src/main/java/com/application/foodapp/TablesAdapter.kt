@@ -1,0 +1,157 @@
+package com.application.foodapp
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+
+class TablesAdapter : RecyclerView.Adapter<TablesAdapter.ViewHolder>() {
+
+
+    private lateinit var clickListener: OnItemClickListener
+
+    interface OnItemClickListener {
+
+
+        fun getOrderButtonClickListener(tableNo:TextView)
+        val mutex: Mutex
+    }
+
+    fun itemClickListener(listener: OnItemClickListener) {
+        clickListener = listener
+    }
+
+
+    class ViewHolder(itemView: View,clickListener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
+        val dropIconButton: ImageView = itemView.findViewById(R.id.dropdownIcon)
+        val getOrderButton: Button = itemView.findViewById(R.id.getOrderButton)
+        val tableNo: TextView = itemView.findViewById(R.id.tableNo)
+        val cardView: CardView = itemView.findViewById(R.id.cardView)
+        var isExpanded = false
+//        fun collapseExpandedView(){
+//            getOrderButton.visibility = View.GONE
+//        }
+
+        init {
+            getOrderButton.setOnClickListener {
+                getOrderButton.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
+                    clickListener.mutex.withLock {
+                        clickListener.getOrderButtonClickListener(tableNo)
+                    }
+                }
+            }
+        }
+
+
+
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TablesAdapter.ViewHolder {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.tables_items, parent, false)
+        return ViewHolder(view,clickListener)
+    }
+
+
+    override fun onBindViewHolder(holder: TablesAdapter.ViewHolder, position: Int) {
+        when (position) {
+            0 -> holder.tableNo.text = "1"
+            1 -> holder.tableNo.text = "2"
+            2 -> holder.tableNo.text = "3"
+            3 -> holder.tableNo.text = "4"
+            4 -> holder.tableNo.text = "5"
+            5 -> holder.tableNo.text = "6"
+            6 -> holder.tableNo.text = "7"
+        }
+
+        val expand = ScaleAnimation(
+            0f, 1.1f,
+            1f, 1f,
+            Animation.RELATIVE_TO_PARENT, 0f,
+            Animation.RELATIVE_TO_PARENT, 0f
+        )
+        expand.duration = 250
+
+        val contract = ScaleAnimation(
+            1.1f, 0f,
+            1f, 1f,
+            Animation.RELATIVE_TO_PARENT, 0f,
+            Animation.RELATIVE_TO_PARENT, 0f
+        )
+        contract.duration = 250
+
+
+
+
+
+        holder.dropIconButton.setOnClickListener {
+//            isAnyItemExpanded(position)
+            if (holder.isExpanded) {
+                holder.cardView.startAnimation(expand)
+                holder.getOrderButton.visibility = View.GONE
+                holder.dropIconButton.setImageResource(R.drawable.baseline_arrow_drop_down_24)
+                holder.isExpanded = false
+            } else {
+                holder.cardView.startAnimation(expand)
+                holder.getOrderButton.visibility = View.VISIBLE
+                holder.dropIconButton.setImageResource(R.drawable.baseline_arrow_drop_up_24)
+                holder.isExpanded = true
+            }
+        }
+
+
+
+        holder.cardView.setOnClickListener {
+//            isAnyItemExpanded(position)
+            if (holder.isExpanded) {
+                holder.cardView.startAnimation(expand)
+                holder.getOrderButton.visibility = View.GONE
+                holder.dropIconButton.setImageResource(R.drawable.baseline_arrow_drop_down_24)
+                holder.isExpanded = false
+            } else {
+                holder.cardView.startAnimation(expand)
+                holder.getOrderButton.visibility = View.VISIBLE
+                holder.dropIconButton.setImageResource(R.drawable.baseline_arrow_drop_up_24)
+                holder.isExpanded = true
+            }
+        }
+    }
+
+
+//    private fun isAnyItemExpanded(position: Int){
+//        val temp = position
+//
+//        if (temp >= 0 && temp != position){
+//            list[temp].isExpanded = false
+//            notifyItemChanged(temp , 0)
+//        }
+//    }
+//    override fun onBindViewHolder(
+//        holder: ViewHolder,
+//        position: Int,
+//        payloads: MutableList<Any>
+//    ) {
+//
+//        if(payloads.isNotEmpty() && payloads[0] == 0){
+//            holder.collapseExpandedView()
+//        }else{
+//            super.onBindViewHolder(holder, position, payloads)
+//
+//        }
+//    }
+
+
+    override fun getItemCount(): Int = 7
+}

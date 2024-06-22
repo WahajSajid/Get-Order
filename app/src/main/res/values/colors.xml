@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+<!--    App theme color-->
+    <color name="app_theme_color">#B430ED</color>
+    <color name="progress_icon_start_color">#DFACF4</color>
+    <color name="progress_icon_end_color">#9258AA</color>
+    <color name="red_color">#EA1325</color>
+    <color name="green_color">#5EEA13</color>
+    <color name="blue_color">#131EEA</color>
+
+</resources>

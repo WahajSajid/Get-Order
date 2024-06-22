@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginTop="5sp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4sp">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:layout_constraintHorizontal_bias="0.5">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/featureImageCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/drinkFeatureImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                app:srcCompat="@drawable/cocalcola" />
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            app:cardCornerRadius="8sp"
+            app:cardElevation="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/featureImageCardView">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/drinkName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Coca Cola"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/availabilityLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@id/drinkName"
+                    app:layout_constraintStart_toStartOf="@id/drinkName"
+                    app:layout_constraintTop_toBottomOf="@id/drinkName">
+
+                    <TextView
+                        android:id="@+id/availabilityTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Availability: " />
+
+                    <TextView
+                        android:id="@+id/availability"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5sp"
+                        android:text="Yes"
+                        android:textColor="#3A9E05"
+                        app:layout_constraintBottom_toBottomOf="@id/availabilityTextView"
+                        app:layout_constraintEnd_toEndOf="@id/drinkName"
+                        app:layout_constraintStart_toEndOf="@id/availabilityTextView"
+                        app:layout_constraintTop_toTopOf="@id/availabilityTextView" />
+
+                </LinearLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/quantityLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/availabilityLayout">
+
+
+                    <TextView
+                        android:id="@+id/selectQuantityTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quantity: "
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/selectQuantityBox"
+                        android:layout_width="50dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="25dp"
+                        android:clickable="false"
+                        app:boxCornerRadiusBottomEnd="5sp"
+                        app:boxCornerRadiusBottomStart="5sp"
+                        app:boxCornerRadiusTopEnd="5sp"
+                        app:boxCornerRadiusTopStart="5sp"
+                        app:boxStrokeColor="@color/black"
+                        app:counterTextAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:hintAnimationEnabled="true"
+                        app:layout_constraintBottom_toBottomOf="@id/selectQuantityTextView"
+                        app:layout_constraintStart_toEndOf="@id/selectQuantityTextView"
+                        app:layout_constraintTop_toTopOf="@id/selectQuantityTextView">
+
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/selectQuantityBoxEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:editable="false"
+                            android:text="1"
+                            tools:ignore="Deprecated" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <TextView
+                        android:id="@+id/quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        app:layout_constraintBottom_toBottomOf="@id/selectQuantityBox"
+                        app:layout_constraintEnd_toEndOf="@id/selectQuantityBox"
+                        app:layout_constraintStart_toStartOf="@id/selectQuantityBox"
+                        app:layout_constraintTop_toTopOf="@id/selectQuantityBox" />
+
+                    <ImageView
+                        android:id="@+id/plusImageButton"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginStart="5sp"
+                        android:layout_marginTop="3dp"
+                        android:src="@drawable/icon_plus"
+                        app:layout_constraintBottom_toBottomOf="@id/selectQuantityBox"
+                        app:layout_constraintStart_toEndOf="@id/selectQuantityBox"
+                        app:layout_constraintTop_toTopOf="@id/selectQuantityBox" />
+
+
+                    <ImageView
+                        android:id="@+id/minusImageButton"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="5sp"
+                        android:src="@drawable/icon_minus"
+                        app:layout_constraintBottom_toBottomOf="@id/selectQuantityBox"
+                        app:layout_constraintEnd_toStartOf="@id/selectQuantityBox"
+                        app:layout_constraintTop_toTopOf="@id/selectQuantityBox" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <Button
+                    android:id="@+id/addItemButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:text="Add Item"
+                    android:textColor="@color/app_theme_color"
+                    android:visibility="visible"
+                    app:cornerRadius="15sp"
+                    app:strokeColor="@color/app_theme_color"
+                    app:strokeWidth="0.5sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/quantityLayout" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
