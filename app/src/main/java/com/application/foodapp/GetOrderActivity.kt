@@ -50,8 +50,8 @@ class GetOrderActivity : AppCompatActivity() {
         //Attaching tab layout with view pager on run time
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
-                0 -> "Drinks Menu"
-                1 -> "Food Menu"
+                0 -> "Food"
+                1 -> "Drinks & Juices"
                 else -> ""
             }
         }.attach()

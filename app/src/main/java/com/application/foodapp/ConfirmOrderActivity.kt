@@ -20,7 +20,6 @@ class ConfirmOrderActivity : AppCompatActivity() {
         supportActionBar?.title = "Confirm Order"
 
     }
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
