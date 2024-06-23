@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10sp"
+    android:layout_marginStart="10sp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/drinkItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.5 liter Coca Cola"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/quantityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantity: "
+        android:layout_marginStart="20sp"
+        app:layout_constraintStart_toEndOf="@id/drinkItem"
+        app:layout_constraintTop_toTopOf="@id/drinkItem"
+        app:layout_constraintBottom_toBottomOf="@+id/drinkItem"/>
+
+
+    <TextView
+        android:id="@+id/drinkItemQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2"
+        android:layout_marginStart="5sp"
+        app:layout_constraintStart_toEndOf="@id/quantityTextView"
+        app:layout_constraintTop_toTopOf="@id/quantityTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/quantityTextView"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
