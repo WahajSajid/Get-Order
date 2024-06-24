@@ -14,7 +14,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 class GetOrderActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGetOrderBinding
-    private val sharedViewModel: SharedViewModel by viewModels()
+    private val sharedViewModel: SharedViewModelForActivity by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        binding = DataBindingUtil.setContentView(this,R.layout.activity_get_order)
