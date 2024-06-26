@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import android.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -30,6 +32,7 @@ class HomeScreen : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         val  adapter = TablesAdapter()
         recyclerView.adapter = adapter
+
 
         adapter.itemClickListener(object : TablesAdapter.OnItemClickListener{
             override fun getOrderButtonClickListener(tableNo: TextView) {

@@ -15,7 +15,7 @@ import kotlinx.coroutines.sync.Mutex
 
 class DrinkMenuFragment : Fragment() {
     private lateinit var binding:FragmentDrinkMenuBinding
-    private lateinit var drinkItems:ArrayList<DrinksItemsData>
+    private lateinit var drinksItems:ArrayList<DrinksItemsData>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,23 +30,31 @@ class DrinkMenuFragment : Fragment() {
         drinksItemsRecyclerView.layoutManager = layout
         drinksItemsRecyclerView.adapter = adapter
 
-        drinkItems = ArrayList()
+        drinksItems = ArrayList()
 
+        //Creating an instance of MyApp class passing the data to it to share the data between fragments.
+        val myApp = requireActivity().application as MyApp
 
         //Setting up onClick listener for add item button in the recycler view item using interface
         adapter.itemClickListener(object :DrinksMenuAdapter.OnItemClickListener{
             override fun addItemClickListener(quantityTextView: TextView, drinkNameTextView: TextView, position:Int) {
                 val quantity = quantityTextView.text.toString().toInt()
-                val foodName = drinkNameTextView.text.toString()
-                val drinkItemsData = DrinksItemsData(foodName,quantity)
-                drinkItems.add(drinkItemsData)
+                val drinkName = drinkNameTextView.text.toString()
+                val drinkItemsData = DrinksItemsData(drinkName,quantity)
+                drinksItems.add(drinkItemsData)
                 Toast.makeText(context,"Item Added",Toast.LENGTH_SHORT).show()
             }
             override val mutex: Mutex = Mutex()
         })
 
-
+        myApp.drinkItems = drinksItems
         return binding.root
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val myApp = requireActivity().application as MyApp
+        myApp.clearDrinksItems()
     }
 
 }

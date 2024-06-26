@@ -7,17 +7,15 @@
 
 
 
-
     <LinearLayout
-        android:id="@+id/quantityLayoutOfDrinksItems"
+        android:id="@+id/quantityLayoutOfOrderItems"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="@id/drinkItemName"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="10sp"
-        app:layout_constraintBottom_toBottomOf="@id/drinkItemName">
-
+        app:layout_constraintTop_toTopOf="@id/orderItemName"
+        app:layout_constraintBottom_toBottomOf="@id/orderItemName"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/quantityTextView"
@@ -28,21 +26,23 @@
 
 
         <TextView
-            android:id="@+id/drinkItemQuantity"
+            android:id="@+id/orderItemQuantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2"
             android:layout_marginStart="5sp" />
 
+
     </LinearLayout>
     <TextView
-        android:id="@+id/drinkItemName"
+        android:id="@+id/orderItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Chicken Karahi 1.5 KG"
         android:layout_marginStart="10sp"
-        android:text="1.5 liter Coca Cola"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

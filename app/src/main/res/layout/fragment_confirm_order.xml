@@ -9,186 +9,142 @@
         android:layout_height="match_parent">
 
 
+
         <TextView
-            android:id="@+id/orderConfirmationTextView"
+            android:id="@+id/nothingToShowTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:fontFamily="@font/aclonica"
-            android:text="Order Confirmation!"
             android:textColor="@color/app_theme_color"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Nothing to Show. Please select the order items first"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/foodOrderConstraintLayout"
+            android:id="@+id/viewLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/orderConfirmationTextView">
-
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone">
 
 
             <TextView
-                android:layout_marginTop="10sp"
-                android:id="@+id/foodTextView"
+                android:id="@+id/orderConfirmationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Food"
+                android:layout_marginTop="10sp"
+                android:fontFamily="@font/aclonica"
+                android:text="Order Confirmation!"
+                android:textColor="@color/app_theme_color"
+                android:textSize="22sp"
                 android:textStyle="bold"
-                android:textSize="18sp"
-                android:layout_marginStart="5sp"
-                app:layout_constraintStart_toStartOf="@id/foodOrderItemsCardView"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/foodOrderItemsCardView"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/foodOrderConstraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
-                app:cardUseCompatPadding="true"
-                android:layout_marginHorizontal="5dp"
-                app:cardElevation="7dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/foodTextView">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/foodOrderItemsRecyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/foodTextView"/>
-
-
-            </androidx.cardview.widget.CardView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="409dp"
-            android:layout_height="3dp"
-            android:background="?android:attr/listDivider"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="248dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20sp"
-            app:layout_constraintTop_toBottomOf="@id/foodOrderConstraintLayout"/>
-
-
-
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/drinksOrderConstraintLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider"
-            android:layout_marginTop="10sp">
-
-
-            <TextView
                 android:layout_marginTop="10sp"
-                android:id="@+id/drinksTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Drinks"
-                android:layout_marginStart="5sp"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@id/drinksOrderItemsCardView"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/drinksOrderItemsCardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
-                app:cardUseCompatPadding="true"
-                android:layout_marginHorizontal="5dp"
-                app:cardElevation="7dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/drinksTextView">
+                app:layout_constraintTop_toBottomOf="@id/orderConfirmationTextView">
 
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/drinksOrderItemsRecyclerview"
+
+
+                <TextView
+                    android:layout_marginTop="10sp"
+                    android:id="@+id/foodTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Order Items: "
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_marginStart="5sp"
+                    app:layout_constraintStart_toStartOf="@id/foodOrderItemsCardView"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/foodOrderItemsCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    app:cardUseCompatPadding="true"
+                    android:layout_marginHorizontal="5dp"
+                    app:cardElevation="7dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/drinksTextView"/>
+                    app:layout_constraintTop_toBottomOf="@id/foodTextView">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/foodOrderItemsRecyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/foodTextView"/>
 
 
-            </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+            <LinearLayout
+                android:id="@+id/buttonLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/foodOrderConstraintLayout">
+
+
+                <Button
+                    android:id="@+id/cancelOrderButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5sp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:text="Cancel"
+                    android:textColor="@color/app_theme_color"
+                    app:strokeColor="@color/app_theme_color"
+                    app:strokeWidth="0.5sp" />
+
+
+                <Button
+                    android:id="@+id/editOrderButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5sp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:text="Edit"
+                    android:textColor="@color/app_theme_color"
+                    app:strokeColor="@color/app_theme_color"
+                    app:strokeWidth="0.5sp" />
+
+                <Button
+                    android:id="@+id/confirmOrderButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/app_theme_color"
+                    android:text="Confirm" />
+            </LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <LinearLayout
-            android:id="@+id/buttonLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/drinksOrderConstraintLayout">
-
-
-            <Button
-                android:id="@+id/cancelOrderButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5sp"
-                android:backgroundTint="@android:color/transparent"
-                android:text="Cancel"
-                android:textColor="@color/app_theme_color"
-                app:strokeColor="@color/app_theme_color"
-                app:strokeWidth="0.5sp" />
-
-
-            <Button
-                android:id="@+id/editOrderButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5sp"
-                android:backgroundTint="@android:color/transparent"
-                android:text="Edit"
-                android:textColor="@color/app_theme_color"
-                app:strokeColor="@color/app_theme_color"
-                app:strokeWidth="0.5sp" />
-
-            <Button
-                android:id="@+id/confirmOrderButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_theme_color"
-                android:text="Confirm" />
-        </LinearLayout>
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,6 +1,7 @@
 package com.application.foodapp
 
+
 data class DrinksItemsData(
-    var drinkItem:String,
-    var quantity:Int
-)
+   override var name:String,
+   override var quantity:Int
+):OrderItems
