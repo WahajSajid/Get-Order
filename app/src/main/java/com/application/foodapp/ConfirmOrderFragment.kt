@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.foodapp.databinding.FragmentConfirmOrderBinding
 
@@ -45,6 +47,7 @@ class ConfirmOrderFragment : Fragment() {
             binding.nothingToShowTextView.visibility = View.VISIBLE
         }
         else{
+            Toast.makeText(context,orderItems.size.toString(),Toast.LENGTH_SHORT).show()
             binding.viewLayout.visibility = View.VISIBLE
             binding.nothingToShowTextView.visibility = View.GONE
             val foodOrderItemsRecyclerView = binding.foodOrderItemsRecyclerview
@@ -53,7 +56,10 @@ class ConfirmOrderFragment : Fragment() {
             foodOrderItemsRecyclerView.adapter = foodAdapter
             foodAdapter.notifyDataSetChanged()
         }
-
+        
+        binding.editOrderButton.setOnClickListener{
+            view?.findNavController()?.navigate(R.id.action_confirmOrderFragment_to_editOrderFragment)
+        }
 
 
 

@@ -10,5 +10,14 @@
         android:id="@+id/confirmOrderFragment"
         android:name="com.application.foodapp.ConfirmOrderFragment"
         android:label="Confirm Order"
-        tools:layout="@layout/fragment_confirm_order" />
+        tools:layout="@layout/fragment_confirm_order" >
+        <action
+            android:id="@+id/action_confirmOrderFragment_to_editOrderFragment"
+            app:destination="@id/editOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editOrderFragment"
+        android:name="com.application.foodapp.EditOrderFragment"
+        android:label="Edit Order"
+        tools:layout="@layout/fragment_edit_order" />
 </navigation>

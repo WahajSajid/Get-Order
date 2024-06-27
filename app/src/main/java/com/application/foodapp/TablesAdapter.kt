@@ -1,5 +1,6 @@
 package com.application.foodapp
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-class TablesAdapter : RecyclerView.Adapter<TablesAdapter.ViewHolder>() {
+class TablesAdapter(private val tables:MutableList<Tables>,context: Context) : RecyclerView.Adapter<TablesAdapter.ViewHolder>() {
 
 
     private lateinit var clickListener: OnItemClickListener
@@ -39,10 +40,9 @@ class TablesAdapter : RecyclerView.Adapter<TablesAdapter.ViewHolder>() {
         val getOrderButton: Button = itemView.findViewById(R.id.getOrderButton)
         val tableNo: TextView = itemView.findViewById(R.id.tableNo)
         val cardView: CardView = itemView.findViewById(R.id.cardView)
-        var isExpanded = false
-//        fun collapseExpandedView(){
-//            getOrderButton.visibility = View.GONE
-//        }
+        fun collapseExpandedView(){
+            getOrderButton.visibility = View.GONE
+        }
 
         init {
             getOrderButton.setOnClickListener {
@@ -66,15 +66,8 @@ class TablesAdapter : RecyclerView.Adapter<TablesAdapter.ViewHolder>() {
 
 
     override fun onBindViewHolder(holder: TablesAdapter.ViewHolder, position: Int) {
-        when (position) {
-            0 -> holder.tableNo.text = "1"
-            1 -> holder.tableNo.text = "2"
-            2 -> holder.tableNo.text = "3"
-            3 -> holder.tableNo.text = "4"
-            4 -> holder.tableNo.text = "5"
-            5 -> holder.tableNo.text = "6"
-            6 -> holder.tableNo.text = "7"
-        }
+        val tablesList= tables[position]
+        holder.tableNo.text = tablesList.TableName
 
         val expand = ScaleAnimation(
             0f, 1.1f,
@@ -97,61 +90,61 @@ class TablesAdapter : RecyclerView.Adapter<TablesAdapter.ViewHolder>() {
 
 
         holder.dropIconButton.setOnClickListener {
-//            isAnyItemExpanded(position)
-            if (holder.isExpanded) {
+            isAnyItemExpanded(position)
+            if (tablesList.isExpanded) {
                 holder.cardView.startAnimation(expand)
                 holder.getOrderButton.visibility = View.GONE
                 holder.dropIconButton.setImageResource(R.drawable.baseline_arrow_drop_down_24)
-                holder.isExpanded = false
+                tablesList.isExpanded = false
             } else {
                 holder.cardView.startAnimation(expand)
                 holder.getOrderButton.visibility = View.VISIBLE
                 holder.dropIconButton.setImageResource(R.drawable.baseline_arrow_drop_up_24)
-                holder.isExpanded = true
+                tablesList.isExpanded = true
             }
         }
 
 
 
         holder.cardView.setOnClickListener {
-//            isAnyItemExpanded(position)
-            if (holder.isExpanded) {
+            isAnyItemExpanded(position)
+            if (tablesList.isExpanded) {
                 holder.cardView.startAnimation(expand)
                 holder.getOrderButton.visibility = View.GONE
                 holder.dropIconButton.setImageResource(R.drawable.baseline_arrow_drop_down_24)
-                holder.isExpanded = false
+                tablesList.isExpanded = false
             } else {
                 holder.cardView.startAnimation(expand)
                 holder.getOrderButton.visibility = View.VISIBLE
                 holder.dropIconButton.setImageResource(R.drawable.baseline_arrow_drop_up_24)
-                holder.isExpanded = true
+                tablesList.isExpanded = true
             }
         }
     }
 
 
-//    private fun isAnyItemExpanded(position: Int){
-//        val temp = position
-//
-//        if (temp >= 0 && temp != position){
-//            list[temp].isExpanded = false
-//            notifyItemChanged(temp , 0)
-//        }
-//    }
-//    override fun onBindViewHolder(
-//        holder: ViewHolder,
-//        position: Int,
-//        payloads: MutableList<Any>
-//    ) {
-//
-//        if(payloads.isNotEmpty() && payloads[0] == 0){
-//            holder.collapseExpandedView()
-//        }else{
-//            super.onBindViewHolder(holder, position, payloads)
-//
-//        }
-//    }
+    private fun isAnyItemExpanded(position: Int){
+        val temp = tables.indexOfFirst { it.isExpanded}
+
+        if (temp >= 0 && temp != position){
+            tables[temp].isExpanded = false
+            notifyItemChanged(temp , 0)
+        }
+    }
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+
+        if(payloads.isNotEmpty() && payloads[0] == 0){
+            holder.collapseExpandedView()
+        }else{
+            super.onBindViewHolder(holder, position, payloads)
+
+        }
+    }
 
 
-    override fun getItemCount(): Int = 7
+    override fun getItemCount(): Int = tables.size
 }

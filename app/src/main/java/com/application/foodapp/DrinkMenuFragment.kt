@@ -51,10 +51,9 @@ class DrinkMenuFragment : Fragment() {
         return binding.root
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         val myApp = requireActivity().application as MyApp
         myApp.clearDrinksItems()
     }
-
 }

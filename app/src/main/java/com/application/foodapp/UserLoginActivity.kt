@@ -17,8 +17,13 @@ class UserLoginActivity : AppCompatActivity() {
 
         binding.loginButton.setOnClickListener {
             if (isEmptyOrNot()) {
-                binding.spinnerLayout.visibility = View.VISIBLE
-                authenticateEmployee()
+                if(NetworkUtil.isNetworkAvailable(this)){
+                    binding.spinnerLayout.visibility = View.VISIBLE
+                    authenticateEmployee()
+                } else{
+                    binding.spinnerLayout.visibility = View.GONE
+                    Toast.makeText(this,"No Internet Connection",Toast.LENGTH_SHORT).show()
+                }
             } else {
                 Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
             }

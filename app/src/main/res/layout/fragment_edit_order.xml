@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ConfirmOrderFragment">
+    tools:context=".EditOrderFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -32,21 +32,6 @@
             android:visibility="visible">
 
 
-            <TextView
-                android:id="@+id/orderConfirmationTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
-                android:fontFamily="@font/aclonica"
-                android:text="Order Confirmation!"
-                android:textColor="@color/app_theme_color"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/foodOrderConstraintLayout"
@@ -55,17 +40,17 @@
                 android:layout_marginTop="10sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/orderConfirmationTextView">
+                app:layout_constraintTop_toTopOf="parent">
 
 
 
 
                 <TextView
                     android:layout_marginTop="10sp"
-                    android:id="@+id/foodTextView"
+                    android:id="@+id/editOrderTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Order Items: "
+                    android:text="Edit Order: "
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:layout_marginStart="5sp"
@@ -83,16 +68,15 @@
                     app:cardElevation="7dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/foodTextView">
+                    app:layout_constraintTop_toBottomOf="@id/editOrderTextView">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/foodOrderItemsRecyclerview"
+                        android:id="@+id/editOrderRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/foodTextView"/>
-
 
                 </androidx.cardview.widget.CardView>
 
@@ -125,22 +109,11 @@
 
 
                 <Button
-                    android:id="@+id/editOrderButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5sp"
-                    android:backgroundTint="@android:color/transparent"
-                    android:text="Edit"
-                    android:textColor="@color/app_theme_color"
-                    app:strokeColor="@color/app_theme_color"
-                    app:strokeWidth="0.5sp" />
-
-                <Button
-                    android:id="@+id/confirmOrderButton"
+                    android:id="@+id/saveChangesButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/app_theme_color"
-                    android:text="Confirm" />
+                    android:text="Save Changes" />
             </LinearLayout>
 
 
