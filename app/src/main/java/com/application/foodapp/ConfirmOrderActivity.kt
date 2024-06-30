@@ -2,10 +2,12 @@ package com.application.foodapp
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,9 +19,16 @@ import com.application.foodapp.databinding.ActivityConfirmOrderBinding
 class ConfirmOrderActivity : AppCompatActivity() {
     private lateinit var binding :ActivityConfirmOrderBinding
     private lateinit var navController:NavController
+    private val sharedViewModel: SharedViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        binding = DataBindingUtil.setContentView(this,R.layout.activity_confirm_order)
+
+        //Retrieving table name from intent
+        val tableName = intent.getStringExtra("tableName")
+
+        sharedViewModel.tableName.value = tableName
+
         val toolBar = binding.myToolBar
         setSupportActionBar(toolBar)
         val navigationHost = supportFragmentManager.findFragmentById(R.id.NavigationHost) as NavHostFragment
@@ -32,11 +41,12 @@ class ConfirmOrderActivity : AppCompatActivity() {
         toolBar.setupWithNavController(navController,appBarConfiguration)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         navController.addOnDestinationChangedListener { _, destination, _ ->
+
             supportActionBar?.title = destination.label
         }
         setupBackButton()
-
     }
+
 
     //Method to set up the action bar with back stack of activity and fragments
     private fun setupBackButton() {

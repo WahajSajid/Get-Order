@@ -26,7 +26,7 @@ class TablesAdapter(private val tables:MutableList<Tables>,context: Context) : R
     interface OnItemClickListener {
 
 
-        fun getOrderButtonClickListener(tableNo:TextView)
+        fun getOrderButtonClickListener(tableName:TextView)
         val mutex: Mutex
     }
 
@@ -38,7 +38,7 @@ class TablesAdapter(private val tables:MutableList<Tables>,context: Context) : R
     class ViewHolder(itemView: View,clickListener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
         val dropIconButton: ImageView = itemView.findViewById(R.id.dropdownIcon)
         val getOrderButton: Button = itemView.findViewById(R.id.getOrderButton)
-        val tableNo: TextView = itemView.findViewById(R.id.tableNo)
+        val tableName: TextView = itemView.findViewById(R.id.tableNameTextView)
         val cardView: CardView = itemView.findViewById(R.id.cardView)
         fun collapseExpandedView(){
             getOrderButton.visibility = View.GONE
@@ -48,7 +48,7 @@ class TablesAdapter(private val tables:MutableList<Tables>,context: Context) : R
             getOrderButton.setOnClickListener {
                 getOrderButton.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
                     clickListener.mutex.withLock {
-                        clickListener.getOrderButtonClickListener(tableNo)
+                        clickListener.getOrderButtonClickListener(tableName)
                     }
                 }
             }
@@ -67,7 +67,7 @@ class TablesAdapter(private val tables:MutableList<Tables>,context: Context) : R
 
     override fun onBindViewHolder(holder: TablesAdapter.ViewHolder, position: Int) {
         val tablesList= tables[position]
-        holder.tableNo.text = tablesList.TableName
+        holder.tableName.text = tablesList.TableName
 
         val expand = ScaleAnimation(
             0f, 1.1f,

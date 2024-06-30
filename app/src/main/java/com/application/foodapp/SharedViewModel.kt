@@ -7,7 +7,12 @@ import androidx.lifecycle.ViewModel
 class SharedViewModel:ViewModel() {
 
     //Table No
-    private var _tableNo = MutableLiveData<String>("")
-    var tableNo: MutableLiveData<String> = _tableNo
+    private var _tableName = MutableLiveData<String>("")
+    var tableName: MutableLiveData<String> = _tableName
+
+
+    //Array list of orderItems
+    private var _orderTimes = ArrayList<OrderItems>()
+    var orderItems = _orderTimes
 
 }

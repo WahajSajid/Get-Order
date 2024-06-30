@@ -8,4 +8,5 @@ class MyApp: Application() {
     fun clearDrinksItems(){
         drinkItems!!.clear()
     }
+    var cancelOrderOrNot:Boolean = false
 }

@@ -14,19 +14,19 @@ import com.application.foodapp.databinding.FragmentDrinkMenuBinding
 import kotlinx.coroutines.sync.Mutex
 
 class DrinkMenuFragment : Fragment() {
-    private lateinit var binding:FragmentDrinkMenuBinding
-    private lateinit var drinksItems:ArrayList<DrinksItemsData>
+    private lateinit var binding: FragmentDrinkMenuBinding
+    private lateinit var drinksItems: ArrayList<DrinksItemsData>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-       binding = DataBindingUtil.inflate(inflater,R.layout.fragment_drink_menu, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_drink_menu, container, false)
 
         //Implemented logic to set up recycler view adapter
         val drinksItemsRecyclerView = binding.drinksRecyclerView
         val adapter = DrinksMenuAdapter()
-        val layout = GridLayoutManager(context,2)
+        val layout = GridLayoutManager(context, 2)
         drinksItemsRecyclerView.layoutManager = layout
         drinksItemsRecyclerView.adapter = adapter
 
@@ -36,20 +36,26 @@ class DrinkMenuFragment : Fragment() {
         val myApp = requireActivity().application as MyApp
 
         //Setting up onClick listener for add item button in the recycler view item using interface
-        adapter.itemClickListener(object :DrinksMenuAdapter.OnItemClickListener{
-            override fun addItemClickListener(quantityTextView: TextView, drinkNameTextView: TextView, position:Int) {
+        adapter.itemClickListener(object : DrinksMenuAdapter.OnItemClickListener {
+            override fun addItemClickListener(
+                quantityTextView: TextView,
+                drinkNameTextView: TextView,
+                position: Int
+            ) {
                 val quantity = quantityTextView.text.toString().toInt()
                 val drinkName = drinkNameTextView.text.toString()
-                val drinkItemsData = DrinksItemsData(drinkName,quantity)
+                val drinkItemsData = DrinksItemsData(drinkName, quantity)
                 drinksItems.add(drinkItemsData)
-                Toast.makeText(context,"Item Added",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Item Added", Toast.LENGTH_SHORT).show()
             }
+
             override val mutex: Mutex = Mutex()
         })
 
         myApp.drinkItems = drinksItems
         return binding.root
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

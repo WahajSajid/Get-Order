@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.foodapp.databinding.FragmentEditOrderBinding
 
@@ -30,6 +31,12 @@ class EditOrderFragment : Fragment() {
         val orderItems = ArrayList<OrderItems>()
         val foodItems = myApp.foodItems
         val drinkItems = myApp.drinkItems
+
+        //Navigating back to the previous fragment when user clicks on  save changes.
+        binding.saveChangesButton.setOnClickListener {
+            val navController = findNavController()
+            navController.popBackStack()
+        }
 
 
         if(drinkItems !=null){

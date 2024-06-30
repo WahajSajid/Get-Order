@@ -50,14 +50,13 @@ class HomeScreen : Fragment() {
 
 
         adapter.itemClickListener(object : TablesAdapter.OnItemClickListener {
-            override fun getOrderButtonClickListener(tableNo: TextView) {
-                sharedViewModel.tableNo.value = tableNo.text.toString()
+            override fun getOrderButtonClickListener(tableName: TextView) {
+                sharedViewModel.tableName.value = tableName.text.toString()
                 val intent = Intent(context, GetOrderActivity::class.java).apply {
-                    putExtra("tableNo", tableNo.text.toString())
+                    putExtra("tableName", tableName.text.toString())
                 }
                 startActivity(intent)
             }
-
 
             override val mutex: Mutex
                 get() = Mutex()

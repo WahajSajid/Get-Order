@@ -49,7 +49,7 @@
                         app:srcCompat="@drawable/baseline_table_restaurant_24" />
 
                     <TextView
-                        android:id="@+id/tableTextView"
+                        android:id="@+id/tableNameTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" Table "
@@ -59,13 +59,13 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                    <TextView
-                        android:id="@+id/tableNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:text="1" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tableNo"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:text="1" />-->
 
                 </LinearLayout>
 

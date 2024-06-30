@@ -99,6 +99,37 @@
                 </LinearLayout>
 
 
+                <LinearLayout
+                    android:id="@+id/priceLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@id/availabilityLayout"
+                    app:layout_constraintStart_toStartOf="@id/availabilityLayout"
+                    app:layout_constraintTop_toBottomOf="@id/availabilityLayout">
+
+                    <TextView
+                        android:id="@+id/priceTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Price: " />
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5sp"
+                        android:text="630"
+                        app:layout_constraintBottom_toBottomOf="@id/availabilityTextView"
+                        app:layout_constraintEnd_toEndOf="@id/drinkName"
+                        app:layout_constraintStart_toEndOf="@id/availabilityTextView"
+                        app:layout_constraintTop_toTopOf="@id/availabilityTextView" />
+
+                </LinearLayout>
+
+
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/quantityLayout"
                     android:layout_width="wrap_content"
@@ -106,7 +137,7 @@
                     android:layout_marginTop="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/availabilityLayout">
+                    app:layout_constraintTop_toBottomOf="@id/priceLayout">
 
 
                     <TextView

@@ -32,22 +32,28 @@ class UserLoginActivity : AppCompatActivity() {
 
     //Method to Authenticate the Employee
     private fun authenticateEmployee() {
-        val username = binding.enterUsernameEditText.text.toString()
+        val userNameEnteredByTheUser = binding.enterUsernameEditText.text.toString()
         val enteredPassword = binding.enterpasswordEditText.text.toString()
         val database = FirebaseDatabase.getInstance()
-        val databaseReference = database.getReference("Employees").child(username.trim())
-        databaseReference.get().addOnSuccessListener {
-            val password = it.child("Password").value.toString()
-            if (enteredPassword == password) {
-                startActivity(Intent(this, MainActivity::class.java))
-                binding.spinnerLayout.visibility = View.GONE
-            } else {
-                binding.spinnerLayout.visibility = View.GONE
-                Toast.makeText(
-                    this@UserLoginActivity,
-                    "Invalid Username or Password",
-                    Toast.LENGTH_SHORT
-                ).show()
+        if(userNameEnteredByTheUser.contains(".") ||userNameEnteredByTheUser.contains("#") || userNameEnteredByTheUser.contains("$") || userNameEnteredByTheUser.contains("[")||userNameEnteredByTheUser.contains("]")){
+            Toast.makeText(this,"Invalid UserName",Toast.LENGTH_SHORT).show()
+            binding.spinnerLayout.visibility = View.GONE
+        }
+        else {
+            val databaseReference = database.getReference("Employees").child(userNameEnteredByTheUser.trim())
+            databaseReference.get().addOnSuccessListener {
+                val password = it.child("Password").value.toString()
+                if (enteredPassword == password) {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    binding.spinnerLayout.visibility = View.GONE
+                } else {
+                    binding.spinnerLayout.visibility = View.GONE
+                    Toast.makeText(
+                        this@UserLoginActivity,
+                        "Invalid Username or Password",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
