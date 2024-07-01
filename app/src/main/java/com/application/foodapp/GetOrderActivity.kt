@@ -38,6 +38,8 @@ class GetOrderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_get_order)
 
+        //Initializing the firebase reference
+        databaseReference = FirebaseDatabase.getInstance().getReference("Sections")
 
         //Retrieving data from the intent and setting it to the text view
         val intent = intent
@@ -60,11 +62,16 @@ class GetOrderActivity : AppCompatActivity() {
         supportActionBar?.title = "Get Order for $tableName"
 
 
+
+        sectionsList = mutableListOf()
+        fetchExistingSections()
+
+
+
         //Setting up tabLayout and viewPager
         tabLayout = binding.tabLayout
         viewPager = binding.viewPager
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-        tabLayout.tabMode = TabLayout.MODE_FIXED
 
         //Creating object of FragmentStateAdapter to handle fragments
         val adapter = ViewPagerAdapter(this)
@@ -72,25 +79,19 @@ class GetOrderActivity : AppCompatActivity() {
         //Attaching tab layout with view pager on run time
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = sectionsPagerAdapter.sections[position].sectionName
-//            tab.text = "Section"
         }.attach()
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Sections")
-
-        sectionsList = mutableListOf()
-
-
-        fetchExistingSections()
 
 
     }
 
 
     private fun fetchExistingSections() {
-        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+        databaseReference.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
+                sectionsList.clear()
                 for (sectionSnapshot in snapshot.children) {
                     val sectionName =
                         sectionSnapshot.child("Name").getValue(String::class.java) ?: ""
@@ -102,6 +103,7 @@ class GetOrderActivity : AppCompatActivity() {
                     sectionsList.add(section)
                 }
                 sectionsPagerAdapter.setSections(sectionsList)
+                sectionsPagerAdapter.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {}

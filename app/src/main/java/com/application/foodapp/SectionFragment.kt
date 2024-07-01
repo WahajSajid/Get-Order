@@ -50,7 +50,7 @@ class SectionFragment : Fragment() {
         recyclerView.layoutManager = layout
 
         //Initializing the sectionList
-        sectionsList = mutableListOf<Sections>()
+        sectionsList = mutableListOf()
 
         section = arguments?.getParcelable(ARG_SECTION)!!
         section.let {
@@ -67,18 +67,11 @@ class SectionFragment : Fragment() {
 
 
     private fun listenForItemUpdates() {
-        val databaseReference = FirebaseDatabase.getInstance().getReference("Sections").child(section.sectionName)
+        val databaseReference = FirebaseDatabase.getInstance().getReference("Sections").child(section.sectionName).child("Items")
 
         databaseReference.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
-
-                for(data in snapshot.children){
-                    val itemsData = data.getValue(Items::class.java)
-                    if(itemsData != null){
-                        section.items = itemsData
-                    }
-                }
                 val itemsMap = snapshot.children.associate {
                     it.key!! to it.getValue(Items::class.java)!!
                 }
