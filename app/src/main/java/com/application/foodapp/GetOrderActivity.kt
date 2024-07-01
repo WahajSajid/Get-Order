@@ -3,6 +3,9 @@ package com.application.foodapp
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -61,33 +64,31 @@ class GetOrderActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Get Order for $tableName"
 
+        binding.spinnerLayout.visibility = View.VISIBLE
 
 
-        sectionsList = mutableListOf()
-        fetchExistingSections()
+
 
 
 
         //Setting up tabLayout and viewPager
         tabLayout = binding.tabLayout
         viewPager = binding.viewPager
-        tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
-        //Creating object of FragmentStateAdapter to handle fragments
-        val adapter = ViewPagerAdapter(this)
-        viewPager.adapter = sectionsPagerAdapter
-        //Attaching tab layout with view pager on run time
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = sectionsPagerAdapter.sections[position].sectionName
-        }.attach()
+        //Initializing sectionsList
+        sectionsList = mutableListOf()
 
-
+        //Checking if network available or not if available load the data from the firebase otherwise show error
+        if(NetworkUtil.isNetworkAvailable(this)){
+            binding.noNetwork.visibility = View.GONE
+            fetchExistingSections(tabLayout,viewPager)
+        } else binding.noNetwork.visibility = View.VISIBLE
 
 
     }
 
 
-    private fun fetchExistingSections() {
+    private fun fetchExistingSections(tabLayout: TabLayout,viewPager: ViewPager2) {
         databaseReference.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -102,11 +103,30 @@ class GetOrderActivity : AppCompatActivity() {
                     val section = Sections(sectionName, itemsMap)
                     sectionsList.add(section)
                 }
-                sectionsPagerAdapter.setSections(sectionsList)
-                sectionsPagerAdapter.notifyDataSetChanged()
+                if(sectionsList.isNotEmpty()){
+                    binding.sectionListIsEmptyImageView.visibility = View.GONE
+                    binding.spinnerLayout.visibility  = View.GONE
+                    binding.tabLayout.visibility = View.VISIBLE
+                    sectionsPagerAdapter.setSections(sectionsList)
+                    sectionsPagerAdapter.notifyDataSetChanged()
+                    updateTabLayoutMode()
+                    viewPager.adapter = sectionsPagerAdapter
+                    //Attaching tab layout with view pager on run time
+                    TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                        tab.text = sectionsPagerAdapter.sections[position].sectionName
+                    }.attach()
+                }
+                else {
+                    sectionsPagerAdapter.notifyDataSetChanged()
+                    binding.sectionListIsEmptyImageView.visibility = View.VISIBLE
+                    binding.spinnerLayout.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                }
             }
 
-            override fun onCancelled(error: DatabaseError) {}
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@GetOrderActivity,error.message,Toast.LENGTH_SHORT).show()
+            }
         })
     }
 
@@ -117,10 +137,34 @@ class GetOrderActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onStop() {
-        super.onStop()
-        sectionsPagerAdapter.clearSections()
-        viewPager.adapter = null
+    private fun updateTabLayoutMode() {
+        val screenWidthDp = getScreenWidthInDp()
+        val tabMaxWidth = 72 // Approximate width of each tab in dp
+        val maxTabsWithoutScroll = screenWidthDp / tabMaxWidth
+
+        tabLayout.tabMode = if (sectionsPagerAdapter.itemCount <= maxTabsWithoutScroll) {
+            TabLayout.MODE_FIXED
+        } else {
+            TabLayout.MODE_SCROLLABLE
+        }
+
+        // Adjust tab width for fixed mode
+        if (tabLayout.tabMode == TabLayout.MODE_FIXED && sectionsPagerAdapter.itemCount > 0) {
+            for (i in 0 until tabLayout.tabCount) {
+                val tab = (tabLayout.getChildAt(0) as ViewGroup).getChildAt(i)
+                tab.layoutParams.width = 0
+                tab.layoutParams = tab.layoutParams
+            }
+        }
+
+    }
+
+
+    //Function to get the width length of mobile screen on which  the app is running.
+    private fun getScreenWidthInDp(): Int {
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return (displayMetrics.widthPixels / displayMetrics.density).toInt()
     }
 
 }

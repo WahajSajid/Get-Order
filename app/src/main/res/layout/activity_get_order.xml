@@ -33,6 +33,23 @@
         </androidx.appcompat.widget.Toolbar>
 
 
+        <ImageView
+            android:id="@+id/sectionListIsEmptyImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/toolBar"
+            android:visibility="gone"
+            app:srcCompat="@drawable/no_sections_to_show_removebg_preview" />
+
+
+
+   <include layout="@layout/progress_bar_layout"
+       android:id="@+id/spinnerLayout"
+       android:visibility="gone"/>
+
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
@@ -43,8 +60,9 @@
             app:layout_constraintTop_toBottomOf="@id/toolBar"
             app:tabBackground="@color/app_theme_color"
             app:tabGravity="fill"
-            android:scrollbarAlwaysDrawHorizontalTrack="true"
+            android:visibility="gone"
             app:tabIndicatorColor="@color/white"
+            app:tabMaxWidth="0dp"
             app:tabMode="scrollable"
             app:tabTextColor="@color/white" />
 
@@ -93,8 +111,10 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
-
-
+<include
+    android:id="@+id/noNetwork"
+    android:visibility="gone"
+    layout="@layout/no_network_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -40,58 +40,16 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/noInternetConnectionLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <ImageView
-                android:id="@+id/noInternetConnectionImageView"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/no_internet_connected_removebg_preview" />
+      <include
+          android:id="@+id/noInternetConnectionLayout"
+          android:visibility="gone"
+          layout="@layout/no_network_layout"/>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Please connect to the Internet "
-                app:layout_constraintStart_toStartOf="@id/noInternetConnectionImageView"
-                app:layout_constraintEnd_toEndOf="@id/noInternetConnectionImageView"
-                app:layout_constraintTop_toBottomOf="@id/noInternetConnectionImageView"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <RelativeLayout
-            android:layout_marginTop="40dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+        <include
             android:id="@+id/spinnerLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                style="@android:style/Widget.ProgressBar.Inverse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:indeterminateDrawable="@drawable/progress_icon"
-                android:progressDrawable="@drawable/progress_icon"
-                android:progressTint="@color/app_theme_color" />
-        </RelativeLayout>
+            layout="@layout/progress_bar_layout"
+            android:visibility="gone"/>
 
 
         <androidx.recyclerview.widget.RecyclerView

@@ -53,21 +53,24 @@ class SectionFragment : Fragment() {
         sectionsList = mutableListOf()
 
         section = arguments?.getParcelable(ARG_SECTION)!!
-        section.let {
-            adapter = ItemsFoodAdapter(it.items.values.toList())
-            recyclerView.adapter = adapter
-            adapter.notifyDataSetChanged()
-        }
-        Toast.makeText(context, section.sectionName, Toast.LENGTH_SHORT).show()
-        listenForItemUpdates()
+        if (section.items.isNotEmpty()) {
+            binding.noMenuItemsAddedYet.visibility = View.GONE
+            section.let {
+                adapter = ItemsFoodAdapter(it.items.values.toList())
+                recyclerView.adapter = adapter
+                adapter.notifyDataSetChanged()
+            }
+        } else binding.noMenuItemsAddedYet.visibility = View.VISIBLE
+
+//        listenForItemUpdates()
         return binding.root
     }
 
 
-
-
     private fun listenForItemUpdates() {
-        val databaseReference = FirebaseDatabase.getInstance().getReference("Sections").child(section.sectionName).child("Items")
+        val databaseReference =
+            FirebaseDatabase.getInstance().getReference("Sections").child(section.sectionName)
+                .child("Items")
 
         databaseReference.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
@@ -78,6 +81,10 @@ class SectionFragment : Fragment() {
                 section.items = itemsMap
                 adapter.updateItems(section.items.values.toList())
                 adapter.notifyDataSetChanged()
+                if (itemsMap.isNotEmpty()) {
+
+                }
+
             }
 
             override fun onCancelled(error: DatabaseError) {
