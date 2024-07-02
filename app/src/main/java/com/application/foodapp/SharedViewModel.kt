@@ -11,6 +11,9 @@ class SharedViewModel:ViewModel() {
     var tableName: MutableLiveData<String> = _tableName
 
 
+    private var _dismissOrNot = MutableLiveData<Boolean>()
+    var dismissOrNot = _dismissOrNot
+
     //Array list of orderItems
     private var _orderTimes = ArrayList<OrderItems>()
     var orderItems = _orderTimes
