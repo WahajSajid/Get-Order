@@ -4,6 +4,8 @@ package com.application.foodapp
 
 import android.content.Context
 import android.net.ConnectivityManager
+import java.net.HttpURLConnection
+import java.net.URL
 
 object NetworkUtil {
 
@@ -12,4 +14,6 @@ object NetworkUtil {
         val activeNetworkInfo = connectivityManager.activeNetworkInfo
         return activeNetworkInfo!= null && activeNetworkInfo.isConnected
     }
+
+
 }
