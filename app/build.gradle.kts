@@ -44,6 +44,7 @@ dependencies {
     implementation ("com.google.android.material:material:1.12.0")
     implementation ("androidx.viewpager2:viewpager2:1.1.0")
     implementation (libs.gson)
+    implementation (libs.okhttp.v491)
     implementation ("androidx.appcompat:appcompat:1.3.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
