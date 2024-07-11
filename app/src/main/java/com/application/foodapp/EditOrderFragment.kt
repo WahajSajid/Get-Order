@@ -38,17 +38,19 @@ class EditOrderFragment : Fragment() {
             navController.popBackStack()
         }
 
-
-        if(drinkItems !=null){
-            orderItems.addAll(drinkItems)
-        }
+//
+//        if(drinkItems !=null){
+//            orderItems.addAll(drinkItems)
+//        }
         if(foodItems !=null){
             orderItems.addAll(foodItems)
         }
+
+
+
         val recyclerView = binding.editOrderRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
         val adapter = EditOrderAdapter(orderItems){
-            myApp.drinkItems?.remove(it)
             myApp.foodItems?.remove(it)
         }
         recyclerView.adapter = adapter

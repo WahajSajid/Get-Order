@@ -37,9 +37,9 @@ class ConfirmOrderFragment : Fragment() {
         val foodItems = app.foodItems
         val drinkItems = app.drinkItems
 
-        if(drinkItems != null){
-            orderItems.addAll(drinkItems)
-        }
+//        if(drinkItems != null){
+//            orderItems.addAll(drinkItems)
+//        }
         if(foodItems !=null) {
             orderItems.addAll(foodItems)
         }

@@ -6,16 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import com.application.foodapp.databinding.FragmentFoodMenuBinding
 import com.application.foodapp.databinding.FragmentSectionBinding
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.sync.Mutex
 
 @Suppress("DEPRECATION")
 class SectionFragment : Fragment() {
@@ -54,42 +50,37 @@ class SectionFragment : Fragment() {
 
         section = arguments?.getParcelable(ARG_SECTION)!!
         if (section.items.isNotEmpty()) {
+
+            val myApp = requireActivity().application as MyApp
+
             binding.noMenuItemsAddedYet.visibility = View.GONE
             section.let {
                 adapter = ItemsFoodAdapter(it.items.values.toList())
                 recyclerView.adapter = adapter
                 adapter.notifyDataSetChanged()
+
+                adapter.itemClickListener(object : ItemsFoodAdapter.OnItemClickListener {
+                    override fun addItemClickListener(
+                        quantityTextView: TextView,
+                        itemNameTextView: TextView,
+                        position: Int
+                    ) {
+                        val quantity = quantityTextView.text.toString().toInt()
+                        val itemName = itemNameTextView.text.toString()
+                        val orderItem = FoodItemsData(itemName, quantity)
+                        myApp.foodItems.add(orderItem)
+                        Toast.makeText(context,"Item Added",Toast.LENGTH_SHORT).show()
+                    }
+
+                    override val mutex: Mutex
+                        get() = Mutex()
+                })
+
             }
         } else binding.noMenuItemsAddedYet.visibility = View.VISIBLE
 
-//        listenForItemUpdates()
+
         return binding.root
     }
 
-
-    private fun listenForItemUpdates() {
-        val databaseReference =
-            FirebaseDatabase.getInstance().getReference("Sections").child(section.sectionName)
-                .child("Items")
-
-        databaseReference.addValueEventListener(object : ValueEventListener {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val itemsMap = snapshot.children.associate {
-                    it.key!! to it.getValue(Items::class.java)!!
-                }
-                section.items = itemsMap
-                adapter.updateItems(section.items.values.toList())
-                adapter.notifyDataSetChanged()
-                if (itemsMap.isNotEmpty()) {
-
-                }
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "Failed to load items", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
 }

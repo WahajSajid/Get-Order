@@ -21,7 +21,6 @@ class SigningInDialogBox : DialogFragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.signing_in_dialog_popup, null, false)
         val app = requireActivity().application as MyApp
-        Toast.makeText(requireContext(),app.dismissOrNot.toString(),Toast.LENGTH_SHORT).show()
         if(app.dismissOrNot){
             dismiss()
         }

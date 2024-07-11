@@ -45,13 +45,13 @@ class DrinkMenuFragment : Fragment() {
                 val quantity = quantityTextView.text.toString().toInt()
                 val drinkName = drinkNameTextView.text.toString()
                 val drinkItemsData = DrinksItemsData(drinkName, quantity)
+                myApp.drinkItems?.add(drinkItemsData)
                 drinksItems.add(drinkItemsData)
                 Toast.makeText(context, "Item Added", Toast.LENGTH_SHORT).show()
             }
 
             override val mutex: Mutex = Mutex()
         })
-
         myApp.drinkItems = drinksItems
         return binding.root
     }

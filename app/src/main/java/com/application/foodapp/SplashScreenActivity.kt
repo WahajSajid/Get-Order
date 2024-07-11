@@ -39,9 +39,6 @@ class SplashScreenActivity : AppCompatActivity() {
         val defaultValue = "default"
         val storedPassword = sharedPreferences.getString("password",defaultValue)!!
         val storedUserName = sharedPreferences.getString("user_name",defaultValue)!!
-        Toast.makeText(this,"$storedPassword  $storedUserName",Toast.LENGTH_SHORT).show()
-
-        val startTime = System.currentTimeMillis()
         val database = FirebaseDatabase.getInstance()
         val databaseReference = database.getReference("Employees").child(storedUserName)
         if(NetworkUtil.isNetworkAvailable(this)){
@@ -98,7 +95,6 @@ class SplashScreenActivity : AppCompatActivity() {
             val password = it.child("Password").value.toString()
             val endTime = System.currentTimeMillis()
             val delayTime = endTime - startTime
-            Handler().postDelayed({
                 if(password == storedPassword){
                     startActivity(Intent(this,MainActivity::class.java))
                     finish()
@@ -108,7 +104,6 @@ class SplashScreenActivity : AppCompatActivity() {
                     startActivity(Intent(this,UserLoginActivity::class.java))
                     finish()
                 }
-            },delayTime)
         }
     }
     private fun failure(){

@@ -34,6 +34,7 @@ class HomeScreen : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_screen, container, false)
 
+        call()
 
         val database = FirebaseDatabase.getInstance()
         val databaseReference = database.getReference("Tables")
@@ -91,5 +92,28 @@ class HomeScreen : Fragment() {
 
         return binding.root
     }
+    private fun  call(){
+        val database = FirebaseDatabase.getInstance()
+        val databaseReference = database.getReference("Employees").child("haamza")
+            databaseReference.child("UserName").addValueEventListener(object: ValueEventListener{
 
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    Toast.makeText(context,"Username changed",Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
+        databaseReference.child("Password").addValueEventListener(object :ValueEventListener{
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Toast.makeText(context,"Password Changed",Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
 }

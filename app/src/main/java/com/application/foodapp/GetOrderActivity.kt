@@ -67,10 +67,6 @@ class GetOrderActivity : AppCompatActivity() {
         binding.spinnerLayout.visibility = View.VISIBLE
 
 
-
-
-
-
         //Setting up tabLayout and viewPager
         tabLayout = binding.tabLayout
         viewPager = binding.viewPager
