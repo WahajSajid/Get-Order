@@ -68,7 +68,7 @@ class SectionFragment : Fragment() {
                         val quantity = quantityTextView.text.toString().toInt()
                         val itemName = itemNameTextView.text.toString()
                         val orderItem = FoodItemsData(itemName, quantity)
-                        myApp.foodItems.add(orderItem)
+                        myApp.foodItems?.add(orderItem)
                         Toast.makeText(context,"Item Added",Toast.LENGTH_SHORT).show()
                     }
 
