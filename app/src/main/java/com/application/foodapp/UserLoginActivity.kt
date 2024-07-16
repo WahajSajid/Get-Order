@@ -28,22 +28,31 @@ class UserLoginActivity : AppCompatActivity() {
 
         initActivity()
     }
-    private fun initActivity(){
+
+    private fun initActivity() {
+        signInDialogBox = SigningInDialogBox()
+        fragmentManager = supportFragmentManager
         binding.loginButton.setOnClickListener {
-            if (NetworkUtil.isNetworkAvailable(this)) {
-                if (isEmptyOrNot()) {
-                    signInDialogBox = SigningInDialogBox()
-                    fragmentManager = supportFragmentManager
+            if (isEmptyOrNot()) {
+                if (NetworkUtil.isNetworkAvailable(this)) {
                     showDialog()
-                    authenticateEmployee()
-                } else {
-//                    signInDialogBox = SigningInDialogBox()
-//                    fragmentManager = supportFragmentManager
-//                    dismissDialog()
-                    Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
-                }
+                    HasInternetAccess.hasInternetAccess(object : HasInternetAccessCallback {
+                        override fun onInternetAccessAvailable() {
+                            runOnUiThread {
+                                authenticateEmployee()
+                            }
+                        }
+                        override fun onInternetAccessNotAvailable() {
+                            runOnUiThread {
+                                Toast.makeText(this@UserLoginActivity,"Connection Timeout",Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    })
+
+
+                } else Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
             }
         }
     }

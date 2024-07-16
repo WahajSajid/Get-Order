@@ -42,7 +42,18 @@ class SplashScreenActivity : AppCompatActivity() {
         val database = FirebaseDatabase.getInstance()
         val databaseReference = database.getReference("Employees").child(storedUserName)
         if(NetworkUtil.isNetworkAvailable(this)){
-            hasInternetAccess(storedPassword,databaseReference,sharedPreferences)
+            HasInternetAccess.hasInternetAccess(object :HasInternetAccessCallback{
+                override fun onInternetAccessAvailable() {
+                    runOnUiThread {
+                        Toast.makeText(this@SplashScreenActivity,"Successful",Toast.LENGTH_SHORT).show()
+                        success(storedPassword,databaseReference,sharedPreferences)
+                    }
+                }
+
+                override fun onInternetAccessNotAvailable() {
+                        failure()
+                }
+            })
 
         } else{
             Handler().postDelayed({
@@ -53,48 +64,9 @@ class SplashScreenActivity : AppCompatActivity() {
         }
 
     }
-    private fun doesInternetHaveNetwork(): Boolean {
-        val task = @SuppressLint("StaticFieldLeak")
-        object : AsyncTask<Void, Void, Boolean>() {
-            override fun doInBackground(vararg params: Void?): Boolean {
-                try {
-                    val socket = Socket()
-                    socket.connect(InetSocketAddress("8.8.8.8", 53), 1500)
-                    socket.close()
-                    return true
-                } catch (e: IOException) {
-                    return false
-                }
-            }
-        }
-        return task.execute().get()
-    }
-    private fun hasInternetAccess(storedPassword:String,databaseReference:DatabaseReference,sharedPreferences:SharedPreferences) {
-       val client = OkHttpClient.Builder()
-           .connectTimeout(10,TimeUnit.SECONDS)
-           .readTimeout(10,TimeUnit.SECONDS)
-           .build()
-        val request = Request.Builder()
-            .url("https://www.google.com")
-            .build()
-        client.newCall(request).enqueue(object : Callback{
-
-            override fun onFailure(call: Call, e: IOException) {
-               failure()
-            }
-
-
-            override fun onResponse(call: Call, response: Response) {
-                success(storedPassword,databaseReference,sharedPreferences)
-            }
-        })
-    }
     private fun success(storedPassword:String,databaseReference:DatabaseReference,sharedPreferences:SharedPreferences){
-        val startTime = System.currentTimeMillis()
         databaseReference.get().addOnSuccessListener {
             val password = it.child("Password").value.toString()
-            val endTime = System.currentTimeMillis()
-            val delayTime = endTime - startTime
                 if(password == storedPassword){
                     startActivity(Intent(this,MainActivity::class.java))
                     finish()
@@ -105,6 +77,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     finish()
                 }
         }
+        databaseReference.get().addOnFailureListener { Toast.makeText(this@SplashScreenActivity,it.message,Toast.LENGTH_SHORT).show() }
     }
     private fun failure(){
         runOnUiThread {
