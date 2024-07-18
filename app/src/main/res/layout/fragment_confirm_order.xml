@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ConfirmOrderFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
 
         <TextView
             android:id="@+id/nothingToShowTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/app_theme_color"
             android:text="Nothing to Show. Please select the order items first"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/app_theme_color"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/viewLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone">
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <TextView
@@ -47,59 +47,53 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/foodOrderConstraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10sp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/orderConfirmationTextView">
 
 
-
-
                 <TextView
-                    android:layout_marginTop="10sp"
                     android:id="@+id/foodTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Order Items: "
-                    android:textStyle="bold"
-                    android:textSize="18sp"
                     android:layout_marginStart="5sp"
+                    android:layout_marginTop="10sp"
+                    android:text="Order Items: "
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@id/foodOrderItemsCardView"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/foodOrderItemsCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="8dp"
-                    app:cardUseCompatPadding="true"
                     android:layout_marginHorizontal="5dp"
+                    app:cardCornerRadius="8dp"
                     app:cardElevation="7dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:cardUseCompatPadding="true"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/foodTextView">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/foodOrderItemsRecyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/foodTextView"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/foodTextView" />
 
 
                 </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
 
             <LinearLayout

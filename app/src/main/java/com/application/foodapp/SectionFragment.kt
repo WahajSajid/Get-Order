@@ -55,7 +55,7 @@ class SectionFragment : Fragment() {
 
             binding.noMenuItemsAddedYet.visibility = View.GONE
             section.let {
-                adapter = ItemsFoodAdapter(it.items.values.toList())
+                adapter = ItemsFoodAdapter(it.items.values.toList(),requireContext())
                 recyclerView.adapter = adapter
                 adapter.notifyDataSetChanged()
 
@@ -68,7 +68,8 @@ class SectionFragment : Fragment() {
                         val quantity = quantityTextView.text.toString().toInt()
                         val itemName = itemNameTextView.text.toString()
                         val orderItem = FoodItemsData(itemName, quantity)
-                        myApp.foodItems?.add(orderItem)
+                        myApp.foodItems.add(orderItem)
+                        Toast.makeText(context,myApp.foodItems.size.toString(),Toast.LENGTH_SHORT).show()
                         Toast.makeText(context,"Item Added",Toast.LENGTH_SHORT).show()
                     }
 

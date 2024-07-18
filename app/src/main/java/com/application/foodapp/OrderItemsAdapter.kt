@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class OrderItemsAdapter(private var orderItemsData:ArrayList<OrderItems>):RecyclerView.Adapter<OrderItemsAdapter.ViewHolder>() {
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-        val foodNameTextView = itemView.findViewById<TextView>(R.id.orderItemName)
-        val quantity = itemView.findViewById<TextView>(R.id.orderItemQuantity)
+        val foodNameTextView = itemView.findViewById<TextView>(R.id.orderItemName)!!
+        val quantity = itemView.findViewById<TextView>(R.id.orderItemQuantity)!!
 
     }
 

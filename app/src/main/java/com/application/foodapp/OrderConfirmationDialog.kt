@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.application.foodapp.databinding.SigningInDialogPopupBinding
 
-class SigningInDialogBox : DialogFragment() {
+class OrderConfirmationDialog : DialogFragment() {
     private lateinit var binding: SigningInDialogPopupBinding
 
     @SuppressLint("UseGetLayoutInflater")
@@ -17,10 +17,8 @@ class SigningInDialogBox : DialogFragment() {
         val inflater = LayoutInflater.from(context)
         binding =
             DataBindingUtil.inflate(inflater, R.layout.signing_in_dialog_popup, null, false)
-        val app = requireActivity().application as MyApp
-        if(app.dismissOrNot){
-            dismiss()
-        }
+
+        binding.signingInText.text = "Confirming Order..."
 
         val dialog = AlertDialog.Builder(requireContext())
             .setView(binding.root)

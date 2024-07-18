@@ -111,10 +111,51 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
-<include
-    android:id="@+id/noNetwork"
-    android:visibility="gone"
-    layout="@layout/no_network_layout" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/noInternetConnectionLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/noInternetConnectionImageView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/no_internet_connected_removebg_preview" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-40dp"
+                android:text="Check your internet connection and try again "
+                app:layout_constraintEnd_toEndOf="@id/noInternetConnectionImageView"
+                app:layout_constraintStart_toStartOf="@id/noInternetConnectionImageView"
+                app:layout_constraintTop_toBottomOf="@id/noInternetConnectionImageView" />
+
+            <Button
+                android:id="@+id/refreshButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/noInternetConnectionImageView"
+                app:layout_constraintEnd_toEndOf="@id/noInternetConnectionImageView"
+                app:layout_constraintTop_toBottomOf="@id/noInternetConnectionImageView"
+                android:text="Refresh"
+                android:textColor="@color/app_theme_color"
+                tools:ignore="HardcodedText"
+                android:backgroundTint="@android:color/transparent"
+                app:strokeWidth="0.5sp"
+                app:strokeColor="@color/app_theme_color"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -33,6 +33,7 @@ class GetOrderActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
     private lateinit var sectionsList: MutableList<Sections>
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var app: MyApp
     private val sectionsPagerAdapter: SectionsPagerAdapter by lazy {
         SectionsPagerAdapter(this, mutableListOf())
     }
@@ -44,12 +45,18 @@ class GetOrderActivity : AppCompatActivity() {
         //Initializing the firebase reference
         databaseReference = FirebaseDatabase.getInstance().getReference("Sections")
 
+        //Initializing app
+        app = application as MyApp
+
+
         //Retrieving data from the intent and setting it to the text view
         val intent = intent
         val tableName = intent.getStringExtra("tableName")
         binding.tableNo.text = tableName
 
         sharedViewModel.tableName.value = tableName
+
+
         //Setting up on click listener for imageButton on the toolbar
         binding.nextButton.setOnClickListener {
             val intent = Intent(this, ConfirmOrderActivity::class.java)
@@ -73,18 +80,40 @@ class GetOrderActivity : AppCompatActivity() {
 
         //Initializing sectionsList
         sectionsList = mutableListOf()
-
-        //Checking if network available or not if available load the data from the firebase otherwise show error
-        if(NetworkUtil.isNetworkAvailable(this)){
-            binding.noNetwork.visibility = View.GONE
-            fetchExistingSections(tabLayout,viewPager)
-        } else binding.noNetwork.visibility = View.VISIBLE
-
-
+        checkInternetAvailability()
+        binding.refreshButton.setOnClickListener {
+            binding.noInternetConnectionLayout.visibility = View.GONE
+            checkInternetAvailability()
+        }
     }
 
+    //Function which check availability of internet and behave accordingly.
+    private fun checkInternetAvailability() {
+        //Checking if network available or not if available load the data from the firebase otherwise show error
+        if (NetworkUtil.isNetworkAvailable(this)) {
+            HasInternetAccess.hasInternetAccess(object : HasInternetAccessCallback {
+                override fun onInternetAccessAvailable() {
+                    runOnUiThread {
+                        binding.noInternetConnectionLayout.visibility = View.GONE
+                        fetchExistingSections(tabLayout, viewPager)
+                    }
+                }
 
-    private fun fetchExistingSections(tabLayout: TabLayout,viewPager: ViewPager2) {
+                override fun onInternetAccessNotAvailable() {
+                    runOnUiThread {
+                        Toast.makeText(
+                            this@GetOrderActivity,
+                            "Connection Timeout",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        binding.noInternetConnectionLayout.visibility = View.VISIBLE
+                    }
+                }
+            })
+        } else binding.noInternetConnectionLayout.visibility = View.VISIBLE
+    }
+
+    private fun fetchExistingSections(tabLayout: TabLayout, viewPager: ViewPager2) {
         databaseReference.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -99,9 +128,9 @@ class GetOrderActivity : AppCompatActivity() {
                     val section = Sections(sectionName, itemsMap)
                     sectionsList.add(section)
                 }
-                if(sectionsList.isNotEmpty()){
+                if (sectionsList.isNotEmpty()) {
                     binding.sectionListIsEmptyImageView.visibility = View.GONE
-                    binding.spinnerLayout.visibility  = View.GONE
+                    binding.spinnerLayout.visibility = View.GONE
                     binding.tabLayout.visibility = View.VISIBLE
                     sectionsPagerAdapter.setSections(sectionsList)
                     sectionsPagerAdapter.notifyDataSetChanged()
@@ -111,8 +140,7 @@ class GetOrderActivity : AppCompatActivity() {
                     TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                         tab.text = sectionsPagerAdapter.sections[position].sectionName
                     }.attach()
-                }
-                else {
+                } else {
                     sectionsPagerAdapter.notifyDataSetChanged()
                     binding.sectionListIsEmptyImageView.visibility = View.VISIBLE
                     binding.spinnerLayout.visibility = View.GONE
@@ -121,12 +149,15 @@ class GetOrderActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@GetOrderActivity,error.message,Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@GetOrderActivity, error.message, Toast.LENGTH_SHORT).show()
             }
         })
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        app.foodItems.clear()
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

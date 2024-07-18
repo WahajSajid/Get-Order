@@ -2,12 +2,14 @@ package com.application.foodapp
 
 import android.annotation.SuppressLint
 import android.content.ClipData.Item
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +18,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.w3c.dom.Text
 
-class ItemsFoodAdapter (private var items:List<Items>):RecyclerView.Adapter<ItemsFoodAdapter.ViewHolder>(){
+class ItemsFoodAdapter (private var items:List<Items>, private var context: Context):RecyclerView.Adapter<ItemsFoodAdapter.ViewHolder>(){
 
 
 
@@ -76,11 +78,11 @@ class ItemsFoodAdapter (private var items:List<Items>):RecyclerView.Adapter<Item
 
 
         if(item.Availability) {
-            holder.availability.setTextColor(R.color.green_color)
+            holder.availability.setTextColor(ContextCompat.getColor(context,R.color.green_color))
             holder.availability.text = "Yes"
         }
         else {
-            holder.availability.setTextColor(R.color.red_color)
+            holder.availability.setTextColor(ContextCompat.getColor(context,R.color.red_color))
             holder.availability.text = "No"
         }
 

@@ -5,11 +5,10 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.MutableLiveData
 
 class MyApp: Application() {
-    var foodItems:ArrayList<FoodItemsData>? =null
-    var drinkItems:ArrayList<DrinksItemsData>? = null
-    fun clearDrinksItems(){
-        drinkItems!!.clear()
-    }
+    var foodItems:ArrayList<FoodItemsData> = ArrayList()
+//    fun clearDrinksItems(){
+//        drinkItems!!.clear()
+//    }
     var cancelOrderOrNot:Boolean = false
 
     var dismissOrNot:Boolean = false

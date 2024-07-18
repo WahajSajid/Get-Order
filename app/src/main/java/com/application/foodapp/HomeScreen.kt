@@ -9,14 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.application.foodapp.databinding.FragmentHomeScreenBinding
-import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -64,27 +60,27 @@ class HomeScreen : Fragment() {
 
 
 
-                databaseReference.addValueEventListener(object : ValueEventListener {
-                    @SuppressLint("NotifyDataSetChanged")
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if(snapshot.exists()) binding.noTablesAddedYetLayout.visibility = View.GONE
-                        else binding.noTablesAddedYetLayout.visibility = View.VISIBLE
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) binding.noTablesAddedYetLayout.visibility = View.GONE
+                else binding.noTablesAddedYetLayout.visibility = View.VISIBLE
 
-                        binding.spinnerLayout.visibility = View.GONE
-                        tables.clear()
-                        for (data in snapshot.children) {
-                            val mateInfo = data.getValue(Tables::class.java)
-                            if (mateInfo != null) {
-                                tables.add(mateInfo)
-                            }
-                        }
-                        adapter.notifyDataSetChanged()
+                binding.spinnerLayout.visibility = View.GONE
+                tables.clear()
+                for (data in snapshot.children) {
+                    val mateInfo = data.getValue(Tables::class.java)
+                    if (mateInfo != null) {
+                        tables.add(mateInfo)
                     }
+                }
+                adapter.notifyDataSetChanged()
+            }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
-                    }
-                })
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+            }
+        })
 
 
 

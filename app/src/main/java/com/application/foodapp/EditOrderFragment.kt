@@ -30,7 +30,6 @@ class EditOrderFragment : Fragment() {
         //Retrieving foodItems from the MyApp class and setting up the recycler view
         val orderItems = ArrayList<OrderItems>()
         val foodItems = myApp.foodItems
-        val drinkItems = myApp.drinkItems
 
         //Navigating back to the previous fragment when user clicks on  save changes.
         binding.saveChangesButton.setOnClickListener {
@@ -38,20 +37,14 @@ class EditOrderFragment : Fragment() {
             navController.popBackStack()
         }
 
-//
-//        if(drinkItems !=null){
-//            orderItems.addAll(drinkItems)
-//        }
-        if(foodItems !=null){
             orderItems.addAll(foodItems)
-        }
 
 
 
         val recyclerView = binding.editOrderRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
         val adapter = EditOrderAdapter(orderItems){
-            myApp.foodItems?.remove(it)
+            myApp.foodItems.remove(it)
         }
         recyclerView.adapter = adapter
         adapter.notifyDataSetChanged()
