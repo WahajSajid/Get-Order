@@ -40,7 +40,7 @@ class HomeScreen : Fragment() {
 
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        val adapter = TablesAdapter(tables, requireContext())
+        val adapter = TablesAdapter(tables)
         recyclerView.adapter = adapter
 
 

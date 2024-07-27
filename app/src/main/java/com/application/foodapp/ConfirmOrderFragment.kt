@@ -63,7 +63,6 @@ class ConfirmOrderFragment : Fragment() {
             binding.viewLayout.visibility = View.GONE
             binding.nothingToShowTextView.visibility = View.VISIBLE
         } else {
-            Toast.makeText(context, orderItems.size.toString(), Toast.LENGTH_SHORT).show()
             binding.viewLayout.visibility = View.VISIBLE
             binding.nothingToShowTextView.visibility = View.GONE
             val foodOrderItemsRecyclerView = binding.foodOrderItemsRecyclerview

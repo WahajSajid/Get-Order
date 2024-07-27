@@ -12,7 +12,7 @@ import com.application.foodapp.databinding.SigningInDialogPopupBinding
 class OrderConfirmationDialog : DialogFragment() {
     private lateinit var binding: SigningInDialogPopupBinding
 
-    @SuppressLint("UseGetLayoutInflater")
+    @SuppressLint("UseGetLayoutInflater", "SetTextI18n")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = LayoutInflater.from(context)
         binding =

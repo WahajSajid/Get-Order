@@ -92,7 +92,7 @@
                         android:text="Yes"
                         android:textColor="#3A9E05"
                         app:layout_constraintBottom_toBottomOf="@id/availabilityTextView"
-                        app:layout_constraintEnd_toEndOf="@id/drinkName"
+                        app:layout_constraintEnd_toEndOf="@id/foodName"
                         app:layout_constraintStart_toEndOf="@id/availabilityTextView"
                         app:layout_constraintTop_toTopOf="@id/availabilityTextView" />
 
@@ -122,7 +122,7 @@
                         android:layout_marginStart="5sp"
                         android:text="630"
                         app:layout_constraintBottom_toBottomOf="@id/availabilityTextView"
-                        app:layout_constraintEnd_toEndOf="@id/drinkName"
+                        app:layout_constraintEnd_toEndOf="@id/foodName"
                         app:layout_constraintStart_toEndOf="@id/availabilityTextView"
                         app:layout_constraintTop_toTopOf="@id/availabilityTextView" />
 
@@ -220,7 +220,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:backgroundTint="@android:color/transparent"
-                    android:text="Add Item"
+                    android:text="Add"
                     android:textColor="@color/app_theme_color"
                     android:visibility="visible"
                     app:cornerRadius="15sp"

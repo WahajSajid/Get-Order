@@ -1,13 +1,11 @@
 package com.application.foodapp
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -18,7 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-class TablesAdapter(private val tables:MutableList<Tables>,context: Context) : RecyclerView.Adapter<TablesAdapter.ViewHolder>() {
+class TablesAdapter(private val tables:MutableList<Tables>) : RecyclerView.Adapter<TablesAdapter.ViewHolder>() {
 
 
     private lateinit var clickListener: OnItemClickListener
@@ -58,14 +56,14 @@ class TablesAdapter(private val tables:MutableList<Tables>,context: Context) : R
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TablesAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.tables_items, parent, false)
         return ViewHolder(view,clickListener)
     }
 
 
-    override fun onBindViewHolder(holder: TablesAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val tablesList= tables[position]
         holder.tableName.text = tablesList.TableName
 

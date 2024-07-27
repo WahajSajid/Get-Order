@@ -1,7 +1,6 @@
 package com.application.foodapp
 
 import android.annotation.SuppressLint
-import android.content.ClipData.Item
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import org.w3c.dom.Text
 
 class ItemsFoodAdapter (private var items:List<Items>, private var context: Context):RecyclerView.Adapter<ItemsFoodAdapter.ViewHolder>(){
 
@@ -44,7 +42,7 @@ class ItemsFoodAdapter (private var items:List<Items>, private var context: Cont
         val plusButton = itemView.findViewById<ImageView>(R.id.plusImageButton)!!
         val minusButton = itemView.findViewById<ImageView>(R.id.minusImageButton)!!
         val quantity = itemView.findViewById<TextView>(R.id.quantity)!!
-        val addItemButton = itemView.findViewById<Button>(R.id.addItemButton)
+        private val addItemButton = itemView.findViewById<Button>(R.id.addItemButton)!!
 
 
         init {
@@ -86,7 +84,6 @@ class ItemsFoodAdapter (private var items:List<Items>, private var context: Cont
             holder.availability.text = "No"
         }
 
-
         holder.plusButton.setOnClickListener {
             val quantity = holder.quantity.text.toString().toInt() + 1
             holder.quantity.text = quantity.toString()
@@ -98,10 +95,5 @@ class ItemsFoodAdapter (private var items:List<Items>, private var context: Cont
             }
         }
 
-    }
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateItems(newItems: List<Items>) {
-        items = newItems
-        notifyDataSetChanged()
     }
 }

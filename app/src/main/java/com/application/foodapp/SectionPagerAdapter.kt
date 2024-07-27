@@ -17,20 +17,9 @@ class SectionsPagerAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addSection(section: Sections) {
-        sections.add(section)
-        notifyItemInserted(sections.size - 1)
-        notifyDataSetChanged()
-    }
-    @SuppressLint("NotifyDataSetChanged")
     fun setSections(sectionsList: List<Sections>) {
         sections.clear()
         sections.addAll(sectionsList)
-        notifyDataSetChanged()
-    }
-    @SuppressLint("NotifyDataSetChanged")
-    fun clearSections(){
-        sections.clear()
         notifyDataSetChanged()
     }
 }
