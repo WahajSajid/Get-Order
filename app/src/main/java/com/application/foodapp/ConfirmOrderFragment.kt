@@ -24,7 +24,7 @@ class ConfirmOrderFragment : Fragment() {
     @SuppressLint("SuspiciousIndentation", "NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         binding =
@@ -112,9 +112,10 @@ class ConfirmOrderFragment : Fragment() {
     }
 
     private fun confirmOrder(tableName: String, orderItems: ArrayList<OrderItems>) {
+
         val database = FirebaseDatabase.getInstance()
         val databaseReference =
-            database.getReference().child("Tables").child(tableName).child("Order")
+            database.getReference().child("Tables").child(tableName).child("Orders")
         databaseReference.setValue(orderItems)
             .addOnSuccessListener {
                 Toast.makeText(context, "Order placed", Toast.LENGTH_SHORT).show()

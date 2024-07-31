@@ -1,6 +1,7 @@
 package com.application.foodapp
 
-interface OrderItems {
-    var name:String
-    var quantity:Int
-}
+data class OrderItems(
+    var Item: FoodItem,
+    var Quantity: Int,
+    var IsDeliverd: Boolean = false,
+)

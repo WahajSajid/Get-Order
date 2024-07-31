@@ -27,7 +27,7 @@ class OrderItemsAdapter(private var orderItemsData:ArrayList<OrderItems>):Recycl
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val orderItem = orderItemsData[position]
-        holder.foodNameTextView.text = orderItem.name
-        holder.quantity.text = orderItem.quantity.toString()
+        holder.foodNameTextView.text = orderItem.Item.Name
+        holder.quantity.text = orderItem.Quantity.toString()
     }
 }

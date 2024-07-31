@@ -36,7 +36,7 @@ class SectionFragment : Fragment() {
     @SuppressLint("SuspiciousIndentation", "NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_section, container, false)
@@ -55,21 +55,26 @@ class SectionFragment : Fragment() {
 
             binding.noMenuItemsAddedYet.visibility = View.GONE
             section.let {
-                adapter = ItemsFoodAdapter(it.items.values.toList(),requireContext())
+                adapter = ItemsFoodAdapter(it.items.values.toList(), requireContext())
                 recyclerView.adapter = adapter
                 adapter.notifyDataSetChanged()
 
                 adapter.itemClickListener(object : ItemsFoodAdapter.OnItemClickListener {
                     override fun addItemClickListener(
+                        availabilityTextView: TextView,
+                        nameTextView: TextView,
+                        priceTextView: TextView,
                         quantityTextView: TextView,
-                        itemNameTextView: TextView,
-                        position: Int
+                        position: Int,
                     ) {
+                        val availability = availabilityTextView.text.toString()
+                        val itemName = nameTextView.text.toString()
+                        val price = priceTextView.text.toString()
                         val quantity = quantityTextView.text.toString().toInt()
-                        val itemName = itemNameTextView.text.toString()
-                        val orderItem = FoodItemsData(itemName, quantity)
+                        val foodItem = FoodItem(itemName, price,availability)
+                        val orderItem = OrderItems(foodItem,quantity,false)
                         myApp.foodItems.add(orderItem)
-                        Toast.makeText(context,"Item Added",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Item Added", Toast.LENGTH_SHORT).show()
                     }
 
                     override val mutex: Mutex

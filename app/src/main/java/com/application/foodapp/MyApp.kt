@@ -3,11 +3,11 @@ package com.application.foodapp
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 
-class MyApp: Application() {
-    var foodItems:ArrayList<FoodItemsData> = ArrayList()
-    var cancelOrderOrNot:Boolean = false
+class MyApp : Application() {
+    var foodItems: ArrayList<OrderItems> = ArrayList()
+    var cancelOrderOrNot: Boolean = false
 
-    var dismissOrNot:Boolean = false
+    var dismissOrNot: Boolean = false
 
     override fun onCreate() {
         super.onCreate()

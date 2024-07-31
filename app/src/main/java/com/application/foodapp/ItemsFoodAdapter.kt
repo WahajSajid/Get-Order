@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.common.GoogleApiAvailability
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -25,7 +26,7 @@ class ItemsFoodAdapter (private var items:List<Items>, private var context: Cont
     interface OnItemClickListener {
 
 
-        fun addItemClickListener(quantityTextView:TextView,itemNameTextView:TextView,position: Int)
+        fun addItemClickListener(availabilityTextView:TextView,nameTextView:TextView, priceTextView:TextView , quantityTextView:TextView, position: Int)
         val mutex: Mutex
     }
 
@@ -49,7 +50,7 @@ class ItemsFoodAdapter (private var items:List<Items>, private var context: Cont
             addItemButton.setOnClickListener {
                 addItemButton.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
                     clickListener.mutex.withLock {
-                        clickListener.addItemClickListener(quantity,name,position)
+                        clickListener.addItemClickListener(availability,name,price,quantity,position)
                     }
                 }
             }
