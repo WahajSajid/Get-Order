@@ -29,6 +29,7 @@ class GetOrderActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
     private lateinit var sectionsList: MutableList<Sections>
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var app: MyApp
     private val sectionsPagerAdapter: SectionsPagerAdapter by lazy {
         SectionsPagerAdapter(this, mutableListOf())
@@ -38,6 +39,7 @@ class GetOrderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_get_order)
 
+        firebaseDatabase = FirebaseDatabase.getInstance()
         //Initializing the firebase reference
         databaseReference = FirebaseDatabase.getInstance().getReference("Sections")
 
@@ -53,7 +55,19 @@ class GetOrderActivity : AppCompatActivity() {
         binding.tableNo.text = tableName
         sharedViewModel.tableName.value = tableName
 
-        retrieveOrder(tableName!!, foodItems)
+        val orderReference = firebaseDatabase.getReference("Tables").child(tableName!!).child("Orders")
+        orderReference.addListenerForSingleValueEvent(object :ValueEventListener{
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    retrieveOrder(tableName, foodItems)
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@GetOrderActivity,error.message,Toast.LENGTH_SHORT).show()
+            }
+        })
+
 
         //Setting up on click listener for imageButton on the toolbar
         binding.nextButton.setOnClickListener {
@@ -88,18 +102,12 @@ class GetOrderActivity : AppCompatActivity() {
 
     //This function retrieve the data from the firebase database if there are any order already placed or not.
     private fun retrieveOrder(tableName: String, foodItems: ArrayList<OrderItems>) {
-        val firebaseDatabase = FirebaseDatabase.getInstance()
         val genericTypeIndicator = object : GenericTypeIndicator<ArrayList<OrderItems>>() {}
         val databaseReference = firebaseDatabase.getReference().child("Tables").child(tableName)
-        databaseReference.addValueEventListener(object : ValueEventListener {
+        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val order = snapshot.child("Orders").getValue(genericTypeIndicator)
                 foodItems.addAll(order!!)
-                object : LoadDataCallBack {
-                    override fun onDataLoaded() {
-
-                    }
-                }
             }
 
             override fun onCancelled(error: DatabaseError) {
