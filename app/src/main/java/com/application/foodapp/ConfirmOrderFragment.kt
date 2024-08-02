@@ -50,7 +50,6 @@ class ConfirmOrderFragment : Fragment() {
         app = requireActivity().application as MyApp
 
 
-        retrieveOrder(tableName)
 
         //Retrieving foodItems from the MyApp class and setting up the recycler view
         val orderItems = ArrayList<OrderItems>()
@@ -90,7 +89,6 @@ class ConfirmOrderFragment : Fragment() {
                         requireActivity().runOnUiThread {
                             confirmOrder(tableName, orderItems)
                         }
-
                     }
 
                     override fun onInternetAccessNotAvailable() {
@@ -122,25 +120,6 @@ class ConfirmOrderFragment : Fragment() {
         return binding.root
     }
 
-    //This function retrieve the data from the firebase database if there are any order already placed or not.
-    private fun retrieveOrder(tableName: String) {
-        val foodItems = app.foodItems
-        val genericTypeIndicator = object : GenericTypeIndicator<ArrayList<OrderItems>>() {}
-        firebaseDatabase = FirebaseDatabase.getInstance()
-        val databaseReference = firebaseDatabase.getReference().child("Tables").child(tableName)
-        databaseReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val order = snapshot.child("Orders").getValue(genericTypeIndicator)
-                foodItems.addAll(order!!)
-                Toast.makeText(context, foodItems.size.toString(), Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
 
     private fun confirmOrder(tableName: String, orderItems: ArrayList<OrderItems>) {
 
@@ -162,4 +141,7 @@ class ConfirmOrderFragment : Fragment() {
 //        super.onDestroy()
 //        app.foodItems.clear()
 //    }
+}
+interface LoadDataCallBack{
+    fun onDataLoaded()
 }

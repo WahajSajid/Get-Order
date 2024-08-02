@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ValueEventListener
 
 @Suppress("DEPRECATION", "NAME_SHADOWING")
@@ -43,14 +44,16 @@ class GetOrderActivity : AppCompatActivity() {
         //Initializing app
         app = application as MyApp
 
+        val foodItems = app.foodItems
+
 
         //Retrieving data from the intent and setting it to the text view
         val intent = intent
         val tableName = intent.getStringExtra("tableName")
         binding.tableNo.text = tableName
-
         sharedViewModel.tableName.value = tableName
 
+        retrieveOrder(tableName!!, foodItems)
 
         //Setting up on click listener for imageButton on the toolbar
         binding.nextButton.setOnClickListener {
@@ -80,6 +83,29 @@ class GetOrderActivity : AppCompatActivity() {
             binding.noInternetConnectionLayout.visibility = View.GONE
             checkInternetAvailability()
         }
+    }
+
+
+    //This function retrieve the data from the firebase database if there are any order already placed or not.
+    private fun retrieveOrder(tableName: String, foodItems: ArrayList<OrderItems>) {
+        val firebaseDatabase = FirebaseDatabase.getInstance()
+        val genericTypeIndicator = object : GenericTypeIndicator<ArrayList<OrderItems>>() {}
+        val databaseReference = firebaseDatabase.getReference().child("Tables").child(tableName)
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val order = snapshot.child("Orders").getValue(genericTypeIndicator)
+                foodItems.addAll(order!!)
+                object : LoadDataCallBack {
+                    override fun onDataLoaded() {
+
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@GetOrderActivity, error.message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     //Function which check availability of internet and behave accordingly.
