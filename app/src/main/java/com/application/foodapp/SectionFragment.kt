@@ -19,6 +19,7 @@ class SectionFragment : Fragment() {
     private lateinit var section: Sections
     private lateinit var adapter: ItemsFoodAdapter
     private lateinit var sectionsList: MutableList<Sections>
+    private lateinit var allFoodItems: ArrayList<FoodItem>
 
     companion object {
         private const val ARG_SECTION = "section"
@@ -40,7 +41,7 @@ class SectionFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_section, container, false)
-
+        allFoodItems = ArrayList()
         val recyclerView = binding.recyclerView
         val layout = GridLayoutManager(context, 2)
         recyclerView.layoutManager = layout
@@ -71,8 +72,8 @@ class SectionFragment : Fragment() {
                         val itemName = nameTextView.text.toString()
                         val price = priceTextView.text.toString()
                         val quantity = quantityTextView.text.toString().toInt()
-                        val foodItem = FoodItem(itemName, price,availability)
-                        val orderItem = OrderItems(foodItem,quantity,false)
+                        val foodItem = FoodItem(itemName, price, availability)
+                        val orderItem = OrderItems(foodItem, quantity, false)
                         myApp.foodItems.add(orderItem)
                         Toast.makeText(context, "Item Added", Toast.LENGTH_SHORT).show()
                     }

@@ -14,7 +14,7 @@ data class Sections(
 
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
-        parcel.readHashMap(Items::class.java.classLoader) as Map<String, Items>
+        parcel.readHashMap(Items::class.java.classLoader) as Map<String, Items>,
     )
 
     override fun describeContents(): Int = 0

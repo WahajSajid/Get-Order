@@ -35,8 +35,8 @@ class EditOrderAdapter(
     @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val items = orderItems[position]
-        holder.quantityTextView.text = items.Quantity.toString()
-        holder.orderItemName.text = items.Item.Name
+        holder.quantityTextView.text = items.quantity.toString()
+        holder.orderItemName.text = items.item.name
 
         //Setting up onClickListener for deleteItemButton
         holder.deleteItem.setOnClickListener {
@@ -50,14 +50,14 @@ class EditOrderAdapter(
         holder.plusButton.setOnClickListener {
             val quantity = holder.quantityTextView.text.toString().toInt() + 1
             holder.quantityTextView.text = quantity.toString()
-            items.Quantity = quantity
+            items.quantity = quantity
             notifyDataSetChanged()
         }
         holder.minusButton.setOnClickListener {
             if (holder.quantityTextView.text.toString().toInt() > 1) {
                 val quantity = holder.quantityTextView.text.toString().toInt() - 1
                 holder.quantityTextView.text = quantity.toString()
-                items.Quantity = quantity
+                items.quantity = quantity
                 notifyDataSetChanged()
             }
         }

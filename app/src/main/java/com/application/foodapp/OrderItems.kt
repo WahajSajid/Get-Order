@@ -1,7 +1,8 @@
 package com.application.foodapp
 
+
 data class OrderItems(
-    var Item: FoodItem,
-    var Quantity: Int,
-    var IsDeliverd: Boolean = false,
+    var item: FoodItem = FoodItem("","",""),
+    var quantity: Int = 0,
+    var isDeliverd: Boolean = false,
 )

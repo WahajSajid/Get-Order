@@ -13,13 +13,21 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.foodapp.databinding.FragmentConfirmOrderBinding
+import com.google.android.gms.common.internal.Objects.ToStringHelper
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.GenericTypeIndicator
+import com.google.firebase.database.ValueEventListener
 
 class ConfirmOrderFragment : Fragment() {
     private lateinit var binding: FragmentConfirmOrderBinding
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var orderConfirmationDialog: OrderConfirmationDialog
     private lateinit var fragmentManager: FragmentManager
+    private lateinit var firebaseDatabase: FirebaseDatabase
+    private lateinit var orderData: ArrayList<OrderItems>
+    private lateinit var app: MyApp
 
     @SuppressLint("SuspiciousIndentation", "NotifyDataSetChanged")
     override fun onCreateView(
@@ -34,12 +42,15 @@ class ConfirmOrderFragment : Fragment() {
         orderConfirmationDialog = OrderConfirmationDialog()
         fragmentManager = childFragmentManager
 
-
+        orderData = ArrayList()
         //Retrieving table name from the sharedViewModel
         val tableName = sharedViewModel.tableName.value.toString()
 
         //Creating instance of MyApp class to retrieve the data shared from the FoodMenuFragment and DrinkMenuFragment
-        val app = requireActivity().application as MyApp
+        app = requireActivity().application as MyApp
+
+
+        retrieveOrder(tableName)
 
         //Retrieving foodItems from the MyApp class and setting up the recycler view
         val orderItems = ArrayList<OrderItems>()
@@ -111,6 +122,26 @@ class ConfirmOrderFragment : Fragment() {
         return binding.root
     }
 
+    //This function retrieve the data from the firebase database if there are any order already placed or not.
+    private fun retrieveOrder(tableName: String) {
+        val foodItems = app.foodItems
+        val genericTypeIndicator = object : GenericTypeIndicator<ArrayList<OrderItems>>() {}
+        firebaseDatabase = FirebaseDatabase.getInstance()
+        val databaseReference = firebaseDatabase.getReference().child("Tables").child(tableName)
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val order = snapshot.child("Orders").getValue(genericTypeIndicator)
+                foodItems.addAll(order!!)
+                Toast.makeText(context, foodItems.size.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+
     private fun confirmOrder(tableName: String, orderItems: ArrayList<OrderItems>) {
 
         val database = FirebaseDatabase.getInstance()
@@ -126,4 +157,9 @@ class ConfirmOrderFragment : Fragment() {
             }
 
     }
+
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        app.foodItems.clear()
+//    }
 }
