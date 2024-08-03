@@ -1,6 +1,7 @@
 package com.application.foodapp
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,10 +17,12 @@ import com.application.foodapp.databinding.FragmentConfirmOrderBinding
 import com.google.android.gms.common.internal.Objects.ToStringHelper
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ValueEventListener
 
+@Suppress("DEPRECATION")
 class ConfirmOrderFragment : Fragment() {
     private lateinit var binding: FragmentConfirmOrderBinding
     private val sharedViewModel: SharedViewModel by activityViewModels()
@@ -27,6 +30,7 @@ class ConfirmOrderFragment : Fragment() {
     private lateinit var fragmentManager: FragmentManager
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var orderData: ArrayList<OrderItems>
+    private lateinit var databaseReferenceOrdered: DatabaseReference
     private lateinit var app: MyApp
 
     @SuppressLint("SuspiciousIndentation", "NotifyDataSetChanged")
@@ -38,6 +42,7 @@ class ConfirmOrderFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_confirm_order, container, false)
 
+
         //Initializing orderConfirmationDialog and fragment manager
         orderConfirmationDialog = OrderConfirmationDialog()
         fragmentManager = childFragmentManager
@@ -48,7 +53,9 @@ class ConfirmOrderFragment : Fragment() {
 
         //Creating instance of MyApp class to retrieve the data shared from the FoodMenuFragment and DrinkMenuFragment
         app = requireActivity().application as MyApp
-
+        firebaseDatabase = FirebaseDatabase.getInstance()
+        databaseReferenceOrdered =
+            firebaseDatabase.getReference("Tables").child(tableName).child("ordered")
 
 
         //Retrieving foodItems from the MyApp class and setting up the recycler view
@@ -124,24 +131,26 @@ class ConfirmOrderFragment : Fragment() {
     private fun confirmOrder(tableName: String, orderItems: ArrayList<OrderItems>) {
 
         val database = FirebaseDatabase.getInstance()
+
+
         val databaseReference =
             database.getReference().child("Tables").child(tableName).child("Orders")
         databaseReference.setValue(orderItems)
             .addOnSuccessListener {
+                if (app.newItemAdded) {
+                    databaseReferenceOrdered.setValue(true)
+                    app.newItemAdded = false
+                }
                 Toast.makeText(context, "Order placed", Toast.LENGTH_SHORT).show()
                 orderConfirmationDialog.dismiss()
+                val intent = Intent(requireActivity(),MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+                requireActivity().finish()
             }
             .addOnFailureListener {
                 Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
             }
 
     }
-
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        app.foodItems.clear()
-//    }
-}
-interface LoadDataCallBack{
-    fun onDataLoaded()
 }

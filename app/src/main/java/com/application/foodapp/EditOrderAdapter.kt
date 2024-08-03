@@ -1,6 +1,7 @@
 package com.application.foodapp
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class EditOrderAdapter(
+    private val app:MyApp,
     private val orderItems: ArrayList<OrderItems>,
     private val onDeleteItem: (OrderItems) -> Unit,
 ) : RecyclerView.Adapter<EditOrderAdapter.ViewHolder>() {
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val plusButton: ImageView = itemView.findViewById(R.id.plusEditImageButton)
         val minusButton: ImageView = itemView.findViewById(R.id.minusEditImageButton)
@@ -41,6 +44,7 @@ class EditOrderAdapter(
         //Setting up onClickListener for deleteItemButton
         holder.deleteItem.setOnClickListener {
             orderItems.remove(items)
+            app.newItemAdded = false
             notifyDataSetChanged()
             onDeleteItem(items)
         }
