@@ -42,7 +42,7 @@ class EditOrderFragment : Fragment() {
 
         val recyclerView = binding.editOrderRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        val adapter = EditOrderAdapter(orderItems){
+        val adapter = EditOrderAdapter(myApp,orderItems){
             myApp.foodItems.remove(it)
         }
         recyclerView.adapter = adapter
