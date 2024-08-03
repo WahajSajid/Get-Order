@@ -55,16 +55,18 @@ class GetOrderActivity : AppCompatActivity() {
         binding.tableNo.text = tableName
         sharedViewModel.tableName.value = tableName
 
-        val orderReference = firebaseDatabase.getReference("Tables").child(tableName!!).child("Orders")
-        orderReference.addListenerForSingleValueEvent(object :ValueEventListener{
+        val orderReference =
+            firebaseDatabase.getReference("Tables").child(tableName!!).child("Orders")
+        orderReference.addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     retrieveOrder(tableName, foodItems)
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@GetOrderActivity,error.message,Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@GetOrderActivity, error.message, Toast.LENGTH_SHORT).show()
             }
         })
 

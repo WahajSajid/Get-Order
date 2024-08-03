@@ -17,8 +17,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-class ItemsFoodAdapter (private var items:List<Items>, private var context: Context):RecyclerView.Adapter<ItemsFoodAdapter.ViewHolder>(){
-
+class ItemsFoodAdapter(private var items: List<Items>, private var context: Context) :
+    RecyclerView.Adapter<ItemsFoodAdapter.ViewHolder>() {
 
 
     private lateinit var clickListener: OnItemClickListener
@@ -26,7 +26,14 @@ class ItemsFoodAdapter (private var items:List<Items>, private var context: Cont
     interface OnItemClickListener {
 
 
-        fun addItemClickListener(availabilityTextView:TextView,nameTextView:TextView, priceTextView:TextView , quantityTextView:TextView, position: Int)
+        fun addItemClickListener(
+            availabilityTextView: TextView,
+            nameTextView: TextView,
+            priceTextView: TextView,
+            quantityTextView: TextView,
+            position: Int,
+        )
+
         val mutex: Mutex
     }
 
@@ -36,21 +43,28 @@ class ItemsFoodAdapter (private var items:List<Items>, private var context: Cont
 
 
     @Suppress("DEPRECATION")
-    class ViewHolder(itemView: View, clickListener: OnItemClickListener):RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View, clickListener: OnItemClickListener) :
+        RecyclerView.ViewHolder(itemView) {
         val availability = itemView.findViewById<TextView>(R.id.availability)!!
         val price = itemView.findViewById<TextView>(R.id.price)!!
         val name = itemView.findViewById<TextView>(R.id.foodName)!!
         val plusButton = itemView.findViewById<ImageView>(R.id.plusImageButton)!!
         val minusButton = itemView.findViewById<ImageView>(R.id.minusImageButton)!!
         val quantity = itemView.findViewById<TextView>(R.id.quantity)!!
-        private val addItemButton = itemView.findViewById<Button>(R.id.addItemButton)!!
+        val addItemButton = itemView.findViewById<Button>(R.id.addItemButton)!!
 
 
         init {
             addItemButton.setOnClickListener {
                 addItemButton.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
                     clickListener.mutex.withLock {
-                        clickListener.addItemClickListener(availability,name,price,quantity,position)
+                        clickListener.addItemClickListener(
+                            availability,
+                            name,
+                            price,
+                            quantity,
+                            position
+                        )
                     }
                 }
             }
@@ -59,8 +73,9 @@ class ItemsFoodAdapter (private var items:List<Items>, private var context: Cont
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.food_menu_items,parent,false)
-        return ViewHolder(view,clickListener)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.food_menu_items, parent, false)
+        return ViewHolder(view, clickListener)
     }
 
     override fun getItemCount(): Int {
@@ -76,13 +91,14 @@ class ItemsFoodAdapter (private var items:List<Items>, private var context: Cont
         holder.availability.text = item.Availability.toString()
 
 
-        if(item.Availability) {
-            holder.availability.setTextColor(ContextCompat.getColor(context,R.color.green_color))
+        if (item.Availability) {
+            holder.availability.setTextColor(ContextCompat.getColor(context, R.color.green_color))
             holder.availability.text = "Yes"
-        }
-        else {
-            holder.availability.setTextColor(ContextCompat.getColor(context,R.color.red_color))
+        } else {
+            holder.availability.setTextColor(ContextCompat.getColor(context, R.color.red_color))
             holder.availability.text = "No"
+            holder.addItemButton.isClickable = false
+            holder.addItemButton.setTextColor(ContextCompat.getColor(context,R.color.red_color))
         }
 
         holder.plusButton.setOnClickListener {
@@ -90,7 +106,7 @@ class ItemsFoodAdapter (private var items:List<Items>, private var context: Cont
             holder.quantity.text = quantity.toString()
         }
         holder.minusButton.setOnClickListener {
-            if(holder.quantity.text.toString().toInt() > 1){
+            if (holder.quantity.text.toString().toInt() > 1) {
                 val quantity = holder.quantity.text.toString().toInt() - 1
                 holder.quantity.text = quantity.toString()
             }

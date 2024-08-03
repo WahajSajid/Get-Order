@@ -9,8 +9,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.application.foodapp.databinding.FragmentSectionBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.values
 import kotlinx.coroutines.sync.Mutex
 
 @Suppress("DEPRECATION")
@@ -20,6 +24,8 @@ class SectionFragment : Fragment() {
     private lateinit var adapter: ItemsFoodAdapter
     private lateinit var sectionsList: MutableList<Sections>
     private lateinit var allFoodItems: ArrayList<FoodItem>
+    private lateinit var firebaseDatabase: FirebaseDatabase
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     companion object {
         private const val ARG_SECTION = "section"
@@ -42,6 +48,7 @@ class SectionFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_section, container, false)
         allFoodItems = ArrayList()
+        firebaseDatabase = FirebaseDatabase.getInstance()
         val recyclerView = binding.recyclerView
         val layout = GridLayoutManager(context, 2)
         recyclerView.layoutManager = layout
@@ -68,11 +75,12 @@ class SectionFragment : Fragment() {
                         quantityTextView: TextView,
                         position: Int,
                     ) {
+                        myApp.newItemAdded = true
                         val availability = availabilityTextView.text.toString()
                         val itemName = nameTextView.text.toString()
                         val price = priceTextView.text.toString()
                         val quantity = quantityTextView.text.toString().toInt()
-                        val foodItem = FoodItem(itemName, price, availability)
+                        val foodItem = FoodItem(itemName, price.toInt(), availability)
                         val orderItem = OrderItems(foodItem, quantity, false)
                         myApp.foodItems.add(orderItem)
                         Toast.makeText(context, "Item Added", Toast.LENGTH_SHORT).show()

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate
 class MyApp : Application() {
     var foodItems: ArrayList<OrderItems> = ArrayList()
     var cancelOrderOrNot: Boolean = false
-
+    var newItemAdded = false
     var dismissOrNot: Boolean = false
 
     override fun onCreate() {
