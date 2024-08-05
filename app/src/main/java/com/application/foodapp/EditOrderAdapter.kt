@@ -52,12 +52,14 @@ class EditOrderAdapter(
 
         //Setting up onClick Listeners for plusButton and minusButton to add and subtract the quantity of the order items.
         holder.plusButton.setOnClickListener {
+            app.orderChanged = true
             val quantity = holder.quantityTextView.text.toString().toInt() + 1
             holder.quantityTextView.text = quantity.toString()
             items.quantity = quantity
             notifyDataSetChanged()
         }
         holder.minusButton.setOnClickListener {
+            app.orderChanged = true
             if (holder.quantityTextView.text.toString().toInt() > 1) {
                 val quantity = holder.quantityTextView.text.toString().toInt() - 1
                 holder.quantityTextView.text = quantity.toString()

@@ -31,6 +31,7 @@ class ConfirmOrderFragment : Fragment() {
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var orderData: ArrayList<OrderItems>
     private lateinit var databaseReferenceOrdered: DatabaseReference
+    private lateinit var orderChangedReference :DatabaseReference
     private lateinit var app: MyApp
 
     @SuppressLint("SuspiciousIndentation", "NotifyDataSetChanged")
@@ -56,8 +57,7 @@ class ConfirmOrderFragment : Fragment() {
         firebaseDatabase = FirebaseDatabase.getInstance()
         databaseReferenceOrdered =
             firebaseDatabase.getReference("Tables").child(tableName).child("ordered")
-
-
+        orderChangedReference = firebaseDatabase.getReference("Tables").child(tableName).child("orderChanged")
         //Retrieving foodItems from the MyApp class and setting up the recycler view
         val orderItems = ArrayList<OrderItems>()
         val foodItems = app.foodItems
@@ -140,6 +140,10 @@ class ConfirmOrderFragment : Fragment() {
                 if (app.newItemAdded) {
                     databaseReferenceOrdered.setValue(true)
                     app.newItemAdded = false
+                }
+                if(app.orderChanged){
+                    orderChangedReference.setValue(true)
+                    app.orderChanged = false
                 }
                 Toast.makeText(context, "Order placed", Toast.LENGTH_SHORT).show()
                 orderConfirmationDialog.dismiss()
