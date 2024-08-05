@@ -8,6 +8,7 @@ class MyApp : Application() {
     var cancelOrderOrNot: Boolean = false
     var newItemAdded = false
     var dismissOrNot: Boolean = false
+    var orderChanged:Boolean = false
 
     override fun onCreate() {
         super.onCreate()
