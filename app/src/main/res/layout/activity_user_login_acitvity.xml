@@ -12,10 +12,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainActivity"
-            android:visibility="visible"
-            android:background="@drawable/sign_up_page"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/sign_up_page"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="-68dp"
+            tools:layout_editor_absoluteY="-44dp">
+
             <TextView
                 android:id="@+id/welcomeText"
                 android:layout_width="wrap_content"
@@ -42,29 +45,11 @@
                 app:layout_constraintTop_toBottomOf="@id/welcomeText" />
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/credentialsInputLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/welcomeText"
-                app:layout_constraintBottom_toTopOf="@id/loginInTextView">
-
-
-
-
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
             <View
                 android:id="@+id/passwordBox"
                 android:layout_width="303dp"
                 android:layout_height="60dp"
-                android:layout_marginBottom="100sp"
+                android:layout_marginBottom="40sp"
                 android:background="@drawable/email_background"
                 app:layout_constraintBottom_toTopOf="@id/loginInTextView"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -77,8 +62,8 @@
                 android:backgroundTint="@color/white"
                 android:drawableLeft="@drawable/baseline_lock_24"
                 android:hint="Password"
-                android:textColor="@color/black"
                 android:inputType="text|textPassword|textAutoComplete"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/passwordBox"
                 app:layout_constraintEnd_toEndOf="@id/passwordBox"
                 app:layout_constraintStart_toStartOf="@id/passwordBox"
@@ -90,11 +75,13 @@
                 android:id="@+id/userNameBox"
                 android:layout_width="303dp"
                 android:layout_height="60dp"
+                android:layout_marginTop="150dp"
                 android:layout_marginBottom="35sp"
                 android:background="@drawable/email_background"
                 app:layout_constraintBottom_toTopOf="@id/passwordBox"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/enterUsernameEditText"
@@ -103,8 +90,8 @@
                 android:backgroundTint="@color/white"
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:hint="Username"
-                android:textColor="@color/black"
                 android:inputType="text|textEmailAddress|textAutoComplete"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/userNameBox"
                 app:layout_constraintEnd_toEndOf="@id/userNameBox"
                 app:layout_constraintStart_toStartOf="@id/userNameBox"
