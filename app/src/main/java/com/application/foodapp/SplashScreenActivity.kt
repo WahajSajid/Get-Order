@@ -31,24 +31,13 @@ class SplashScreenActivity : AppCompatActivity() {
         val database = FirebaseDatabase.getInstance()
         val databaseReference = database.getReference("Employees").child(storedUserName)
 
-        //Checking if the employee is still there or have been deleted by the admin
-        databaseReference.addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(!snapshot.exists()){
-                    sharedPreferences.edit().putString("user_name",defaultValue).apply()
-                    sharedPreferences.edit().putString("password",defaultValue).apply()
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@SplashScreenActivity,error.message,Toast.LENGTH_SHORT).show()
-            }
-        })
-
 
         if (NetworkUtil.isNetworkAvailable(this)) {
             HasInternetAccess.hasInternetAccess(object : HasInternetAccessCallback {
                 override fun onInternetAccessAvailable() {
                     runOnUiThread {
+
+
                         success(storedPassword, databaseReference, sharedPreferences)
                     }
                 }
@@ -71,27 +60,41 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun success(
         storedPassword: String,
         databaseReference: DatabaseReference,
-        sharedPreferences: SharedPreferences
+        sharedPreferences: SharedPreferences,
     ) {
-        databaseReference.get().addOnSuccessListener {
-            val password = it.child("Password").value.toString()
-            if (password == storedPassword) {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            } else {
-                sharedPreferences.edit().remove("password").apply()
-                sharedPreferences.edit().remove("user_name").apply()
-                startActivity(Intent(this, UserLoginActivity::class.java))
-                finish()
+
+        //Checking if the employee is still there or have been deleted by the admin
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    databaseReference.get().addOnSuccessListener {
+                        val password = it.child("Password").value.toString()
+                        if (password == storedPassword) {
+                            loginInformationCorrect()
+                        } else {
+                            sharedPreferences.edit().remove("password").apply()
+                            sharedPreferences.edit().remove("user_name").apply()
+                            loginInformationWrong()
+                        }
+                    }
+                    databaseReference.get().addOnFailureListener {
+                        Toast.makeText(
+                            this@SplashScreenActivity,
+                            it.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    sharedPreferences.edit().putString("user_name", "default").apply()
+                    sharedPreferences.edit().putString("password", "default").apply()
+                    loginInformationWrong()
+                }
             }
-        }
-        databaseReference.get().addOnFailureListener {
-            Toast.makeText(
-                this@SplashScreenActivity,
-                it.message,
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@SplashScreenActivity, error.message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun failure() {
@@ -102,4 +105,13 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
+    private fun loginInformationCorrect() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
+    private fun loginInformationWrong() {
+        startActivity(Intent(this, UserLoginActivity::class.java))
+        finish()
+    }
 }
