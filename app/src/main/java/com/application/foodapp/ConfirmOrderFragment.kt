@@ -127,12 +127,9 @@ class ConfirmOrderFragment : Fragment() {
         return binding.root
     }
 
-
     private fun confirmOrder(tableName: String, orderItems: ArrayList<OrderItems>) {
 
         val database = FirebaseDatabase.getInstance()
-
-
         val databaseReference =
             database.getReference().child("Tables").child(tableName).child("Orders")
         databaseReference.setValue(orderItems)

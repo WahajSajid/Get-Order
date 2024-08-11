@@ -9,8 +9,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.application.foodapp.databinding.ActivitySplashScreenBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 @Suppress("DEPRECATION")
 @SuppressLint("CustomSplashScreen")
@@ -27,6 +30,21 @@ class SplashScreenActivity : AppCompatActivity() {
         val storedUserName = sharedPreferences.getString("user_name", defaultValue)!!
         val database = FirebaseDatabase.getInstance()
         val databaseReference = database.getReference("Employees").child(storedUserName)
+
+        //Checking if the employee is still there or have been deleted by the admin
+        databaseReference.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(!snapshot.exists()){
+                    sharedPreferences.edit().putString("user_name",defaultValue).apply()
+                    sharedPreferences.edit().putString("password",defaultValue).apply()
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@SplashScreenActivity,error.message,Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
         if (NetworkUtil.isNetworkAvailable(this)) {
             HasInternetAccess.hasInternetAccess(object : HasInternetAccessCallback {
                 override fun onInternetAccessAvailable() {
