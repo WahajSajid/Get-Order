@@ -9,6 +9,7 @@ class MyApp : Application() {
     var newItemAdded = false
     var dismissOrNot: Boolean = false
     var orderChanged:Boolean = false
+    var existingFoodItems = 0
 
     override fun onCreate() {
         super.onCreate()
