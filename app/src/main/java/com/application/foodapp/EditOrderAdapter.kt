@@ -43,6 +43,7 @@ class EditOrderAdapter(
 
         //Setting up onClickListener for deleteItemButton
         holder.deleteItem.setOnClickListener {
+            app.orderChanged = true
             orderItems.remove(items)
             app.newItemAdded = false
             notifyDataSetChanged()
