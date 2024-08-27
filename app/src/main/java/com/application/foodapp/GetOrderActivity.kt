@@ -110,6 +110,7 @@ class GetOrderActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val order = snapshot.child("Orders").getValue(genericTypeIndicator)
                 foodItems.addAll(order!!)
+                app.existingFoodItems = foodItems.size
             }
 
             override fun onCancelled(error: DatabaseError) {
