@@ -60,7 +60,6 @@ class SectionFragment : Fragment() {
         if (section.items.isNotEmpty()) {
 
             val myApp = requireActivity().application as MyApp
-
             binding.noMenuItemsAddedYet.visibility = View.GONE
             section.let {
                 adapter = ItemsFoodAdapter(it.items.values.toList(), requireContext())
@@ -83,6 +82,8 @@ class SectionFragment : Fragment() {
                         val foodItem = FoodItem(itemName, price.toInt(), availability)
                         val orderItem = OrderItems(foodItem, quantity, false)
                         myApp.foodItems.add(orderItem)
+//                        val sizeOfFoodItems = myApp.foodItems.size
+//                        val existingFoodItems = myApp.existingFoodItems
                         Toast.makeText(context, "Item Added", Toast.LENGTH_SHORT).show()
                     }
 
