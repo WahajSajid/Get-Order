@@ -46,7 +46,7 @@ class ConfirmOrderActivity : AppCompatActivity() {
 
     //Method to set up the action bar with back stack of activity and fragments
     private fun setupBackButton() {
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             supportActionBar?.setDisplayHomeAsUpEnabled(destination.id == R.id.confirmOrderFragment || destination.id == R.id.editOrderFragment)
             supportActionBar?.title = destination.label
         }

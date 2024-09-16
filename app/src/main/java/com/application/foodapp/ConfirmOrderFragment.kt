@@ -3,7 +3,6 @@ package com.application.foodapp
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,15 +14,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.foodapp.databinding.FragmentConfirmOrderBinding
-import com.google.android.gms.common.internal.Objects.ToStringHelper
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.GenericTypeIndicator
-import com.google.firebase.database.ValueEventListener
 
-@Suppress("DEPRECATION")
 class ConfirmOrderFragment : Fragment() {
     private lateinit var binding: FragmentConfirmOrderBinding
     private val sharedViewModel: SharedViewModel by activityViewModels()
