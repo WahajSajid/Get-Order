@@ -3,6 +3,7 @@ package com.application.foodapp
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,7 @@ class ConfirmOrderFragment : Fragment() {
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var orderData: ArrayList<OrderItems>
     private lateinit var databaseReferenceOrdered: DatabaseReference
+    private lateinit var isTableBusyReference:DatabaseReference
     private lateinit var orderChangedReference :DatabaseReference
     private lateinit var app: MyApp
 
@@ -57,6 +59,10 @@ class ConfirmOrderFragment : Fragment() {
         firebaseDatabase = FirebaseDatabase.getInstance()
         databaseReferenceOrdered =
             firebaseDatabase.getReference("Tables").child(tableName).child("ordered")
+
+        isTableBusyReference =
+            firebaseDatabase.getReference("Tables").child(tableName).child("isTableBusy")
+
         orderChangedReference = firebaseDatabase.getReference("Tables").child(tableName).child("orderChanged")
         //Retrieving foodItems from the MyApp class and setting up the recycler view
         val orderItems = ArrayList<OrderItems>()
@@ -128,7 +134,6 @@ class ConfirmOrderFragment : Fragment() {
     }
 
     private fun confirmOrder(tableName: String, orderItems: ArrayList<OrderItems>) {
-
         val database = FirebaseDatabase.getInstance()
         val databaseReference =
             database.getReference().child("Tables").child(tableName).child("Orders")
@@ -136,10 +141,12 @@ class ConfirmOrderFragment : Fragment() {
             .addOnSuccessListener {
                 if (app.newItemAdded) {
                     databaseReferenceOrdered.setValue(true)
+                    isTableBusyReference.setValue(true)
                     app.newItemAdded = false
                 }
                 if(app.orderChanged){
                     orderChangedReference.setValue(true)
+                    isTableBusyReference.setValue(true)
                     app.orderChanged = false
                 }
                 Toast.makeText(context, "Order placed", Toast.LENGTH_SHORT).show()
